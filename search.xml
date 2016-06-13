@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[React Native从最基础学起]]></title>
+      <url>http://lixuzong.com/2016/06/13/React%20Native%E4%BB%8E%E6%9C%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E8%B5%B7%20/</url>
+      <content type="html"><![CDATA[<p>这篇文章主要讲的的内容是没有JavaScript基础的情况下开发React Native应用需要知道的基础知识。也是我在学习React Native框架的一个学习曲线。以方便记录下来方便查阅，一方面希望可以帮助到和我一样的菜鸟减少学习时间。</p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui1.jpg" alt="shouhuiImage"></p>
+<a id="more"></a>
+<h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><h3 id="var和let的区别"><a href="#var和let的区别" class="headerlink" title="var和let的区别"></a>var和let的区别</h3><p>var声明的变量是无视作用域的，而let是在作用域里有效的。</p>
+<blockquote>
+<p>这里需要和swift中的var和let区分，var是是可以改变的值，而let是不可以改变的值，与作用域无关。</p>
+</blockquote>
+<h3 id="匿名函数的写法"><a href="#匿名函数的写法" class="headerlink" title="匿名函数的写法"></a>匿名函数的写法</h3><p>与swift语法一样，函数也是对象类型，也可作为函数的返回值来只用，但是匿名函数的写法有所不同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFunc</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (valueA, valueB) =&gt; &#123;</span><br><span class="line">		<span class="keyword">return</span> valueA +valueB;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="built_in">console</span>.log(addFunc()(<span class="number">1.2</span>)); <span class="comment">//输出3</span></span><br></pre></td></tr></table></figure>
+<h3 id="与-的区别"><a href="#与-的区别" class="headerlink" title="==与===的区别"></a>==与===的区别</h3><p>与其他语法不同点是==比较左右的值，只要值相等，结果就是true。而===不仅比较值，也比较类型，只有两者相等才返回true。</p>
+<blockquote>
+<p>‘!=’是值不相等，‘！==’是值和类型都不相等</p>
+</blockquote>
+<h2 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h2><ul>
+<li>this 关键字表示类对象本身，如果在类内使用函数之类通过this来调用</li>
+<li>类的构造函数<em>constructor(valueA,valueB)</em>创建类的使用调用</li>
+<li>可以通过<em>static</em>和<em>Class.obj</em>两种方式创建静态变量</li>
+<li>类中定义的函数可以省略关键字<em>function</em></li>
+<li>通过<em>this.obj</em>来创建字段，可以在类的构造函数里面创建也可以在函数外创建，如果是未创建的字段其值为<em>undefined</em></li>
+<li>字段的只读和只写属性通过<em>get</em>和<em>set</em>关键字来声明，这里可以跟objective-C的方法类比。</li>
+<li>类的继承使用extend关键字，在子类里调用super就可以调用父类的函数。</li>
+<li>对象使用new来生成，还有一种情况是直接生成匿名类对象，用键值对的形式创建对象。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">   	name: <span class="string">'obj'</span>,</span><br><span class="line">   	value: <span class="string">'lalala'</span>,</span><br><span class="line">  	 	sayHello: <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">       	<span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name);</span><br><span class="line">   	&#125;,</span><br><span class="line">   	sayHi: (name) =&gt; &#123;</span><br><span class="line">       	<span class="built_in">console</span>.log(<span class="string">'Hi! '</span> + name);</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="文件的导入和导出"><a href="#文件的导入和导出" class="headerlink" title="文件的导入和导出"></a>文件的导入和导出</h2><p>首先说一下相对路径，使用 . 就是在当前路径查找，如果是..就是从上层路径查找，没有 . 或者 / 开头的就是从项目根目录开始查找。</p>
+<h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><p>导出的时候需要使用<em>export</em>关键字,可以到出变量、类、函数，可以定义默认导出内容，需要加上<em>export default</em>关键字</p>
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><p>导入文件使用关键字<em>import</em>,<em>from</em>格式是 <em>import [something] from ‘相对路径’</em> 。如果是没有使用默认导出的情况下可以根据需要接收需要的属性，一般是全部接收，如果有默认导出的话可以直接接收默认导出，并且默认导出是唯一的！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// data.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">'lala'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> age = <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// 如果只需要 value 和 name</span></span><br><span class="line"><span class="keyword">import</span> &#123;value, name&#125; <span class="keyword">from</span> <span class="string">'./data.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(value);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果想将所有由 export 导出的都引入</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> data <span class="keyword">from</span> <span class="string">'./data.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(data.value);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导入可以任意取名</span></span><br><span class="line"><span class="keyword">import</span> anyName <span class="keyword">from</span> <span class="string">'./data.js'</span></span><br><span class="line"><span class="built_in">console</span>.log(anyName);	</span><br></pre></td></tr></table></figure>    
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p><img src="http://o835bn5qj.bkt.clouddn.com/reactnativeLifeCycle.png" alt="liftCycle"><br>在整个ReactJS的生命周期中，主要经历4个阶段：创建阶段、实例化阶段、更新阶段和销毁阶段。</p>
+<h3 id="创建阶段"><a href="#创建阶段" class="headerlink" title="创建阶段"></a>创建阶段</h3><p>   这个阶段会调用<em>getDefaultProps</em>方法，并返回一个对象缓存下来，然后与父组件制定的props对象合并，最后赋值给this.props作为默认属性。</p>
+<blockquote>
+<p><em>props</em>是一个对象，是组件用来接收外面参数的，不支持在内部修改自己的<em>props</em>属性,只能通过父组件来赋值。<em>getDefaultProps</em>方法是用来设置默认值得。</p>
+</blockquote>
+<h3 id="实例化阶段"><a href="#实例化阶段" class="headerlink" title="实例化阶段"></a>实例化阶段</h3><p>该阶段是在实例化组件类的时候，也就是该组件类被调用的时候。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">React.render (</span><br><span class="line">	&lt;List name = "ReactJS"&gt;&lt;/List&gt;</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">"container"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们初始化了一个<em>List</em>组件，这个时候看一下依次调用的生命周期方法。</p>
+<ol>
+<li><em>getInitialState</em> 初始化组件的state值，其值会被赋值给this.state属性。</li>
+<li><em>componentWillMount</em> 组件即将被加载到视图上的时候调用，根据业务对state进行相应的操作</li>
+<li><em>render</em> 根据state的值，生成页面需要的虚拟DOM结构，并返回该结构。</li>
+<li><em>componentDidMount</em> 对根据虚拟DOM结构而生成的真是DOM进行相应的处理。为了保证不出现UI上的错误，在这个函数里面发起请求接收网络数据。这个时候改变this.state属性就会出发ReactJS内部的监听事件，再次调用<em>getInitialState</em>函数，这样的话再次刷新界面。</li>
+</ol>
+<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><p>这主要发生在用户操作之后或者父组件有更新的时候，此时会根据用户的操作进行相应的调整。</p>
+<ol>
+<li><em>componentWillReceiveProps(object nextProps)</em> 当组件接收到新的<em>props</em>时，会触发该函数。在该函数中通常可以调用<em>this.state</em>完成对<em>state</em>的修改。</li>
+<li><em>shouldComponentUpdate(nextProps nextState)</em> 该方法会拦截新的<em>props</em>和<em>state</em>，然后根据事先判定好的判断逻辑，做出最后要不要更新组件的决定。</li>
+<li><em>componentWillUpdate(object nextProps, object nextState)</em> 当方法2返回的是true的时候这里就做一些更新前的操作。</li>
+<li><em>render</em> 根据一系列的diff算法，生成需要更新的虚拟DOM数据。最好在这里进行数据和模板的整合，不进行state的操作。</li>
+<li><em>componentDidUpdate</em> 该方法在组件更新已经同步到DOM中后出发，我们通常在该方法中做一些DOM操作。</li>
+</ol>
+<h3 id="销毁阶段"><a href="#销毁阶段" class="headerlink" title="销毁阶段"></a>销毁阶段</h3><p><em>componentWillUnmount</em> 当组件从DOM中移除的时候调用这个方法，通常会在这个方法中做一些取消事件绑定，销毁定时器等工作。</p>
+<blockquote>
+<p>就相当于iOS中的dealloc函数。   </p>
+</blockquote>
+<h2 id="参考文章链接"><a href="#参考文章链接" class="headerlink" title="参考文章链接"></a>参考文章链接</h2><p><a href="http://blog.csdn.net/yuanguozhengjust/article/details/50470171" target="_blank" rel="external">http://blog.csdn.net/yuanguozhengjust/article/details/50470171</a><br><a href="https://lzxhahaha.gitbooks.io/react-native-getting-start/content/index.html" target="_blank" rel="external">https://lzxhahaha.gitbooks.io/react-native-getting-start/content/index.html</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[第一篇博客]]></title>
+      <url>http://lixuzong.com/2016/06/13/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+      <content type="html"><![CDATA[<p>马上就要毕业了，非常期待之后的职业生活，这里不仅仅会记录我的技术的成长过程，也会记录我的心路历程。另外每篇博客都会附一张手绘，不是我画的，是女朋友画的！</p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg" alt="shouhuiImage"></p>
+]]></content>
+    </entry>
+    
+  
+  
+</search>

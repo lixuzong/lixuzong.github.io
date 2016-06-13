@@ -1,0 +1,994 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ReactNative," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要讲的的内容是没有JavaScript基础的情况下开发React Native应用需要知道的基础知识。也是我在学习React Native框架的一个学习曲线。以方便记录下来方便查阅，一方面希望可以帮助到和我一样的菜鸟减少学习时间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native从最基础学起">
+<meta property="og:url" content="http://lixuzong.com/2016/06/13/React Native从最基础学起 /index.html">
+<meta property="og:site_name" content="Lixuzong's Blog">
+<meta property="og:description" content="这篇文章主要讲的的内容是没有JavaScript基础的情况下开发React Native应用需要知道的基础知识。也是我在学习React Native框架的一个学习曲线。以方便记录下来方便查阅，一方面希望可以帮助到和我一样的菜鸟减少学习时间。">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/shouhui1.jpg">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/reactnativeLifeCycle.png">
+<meta property="og:updated_time" content="2016-06-13T07:30:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native从最基础学起">
+<meta name="twitter:description" content="这篇文章主要讲的的内容是没有JavaScript基础的情况下开发React Native应用需要知道的基础知识。也是我在学习React Native框架的一个学习曲线。以方便记录下来方便查阅，一方面希望可以帮助到和我一样的菜鸟减少学习时间。">
+<meta name="twitter:image" content="http://o835bn5qj.bkt.clouddn.com/shouhui1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> React Native从最基础学起 | Lixuzong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=500131055";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Lixuzong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">do myself!</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Native从最基础学起
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-13T15:30:45+08:00" content="2016-06-13">
+              2016-06-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/13/React Native从最基础学起 /#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/React Native从最基础学起 /" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/13/React Native从最基础学起 /" class="leancloud_visitors" data-flag-title="React Native从最基础学起">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章主要讲的的内容是没有JavaScript基础的情况下开发React Native应用需要知道的基础知识。也是我在学习React Native框架的一个学习曲线。以方便记录下来方便查阅，一方面希望可以帮助到和我一样的菜鸟减少学习时间。</p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui1.jpg" alt="shouhuiImage"></p>
+<a id="more"></a>
+<h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><h3 id="var和let的区别"><a href="#var和let的区别" class="headerlink" title="var和let的区别"></a>var和let的区别</h3><p>var声明的变量是无视作用域的，而let是在作用域里有效的。</p>
+<blockquote>
+<p>这里需要和swift中的var和let区分，var是是可以改变的值，而let是不可以改变的值，与作用域无关。</p>
+</blockquote>
+<h3 id="匿名函数的写法"><a href="#匿名函数的写法" class="headerlink" title="匿名函数的写法"></a>匿名函数的写法</h3><p>与swift语法一样，函数也是对象类型，也可作为函数的返回值来只用，但是匿名函数的写法有所不同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFunc</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (valueA, valueB) =&gt; &#123;</span><br><span class="line">		<span class="keyword">return</span> valueA +valueB;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="built_in">console</span>.log(addFunc()(<span class="number">1.2</span>)); <span class="comment">//输出3</span></span><br></pre></td></tr></table></figure>
+<h3 id="与-的区别"><a href="#与-的区别" class="headerlink" title="==与===的区别"></a>==与===的区别</h3><p>与其他语法不同点是==比较左右的值，只要值相等，结果就是true。而===不仅比较值，也比较类型，只有两者相等才返回true。</p>
+<blockquote>
+<p>‘!=’是值不相等，‘！==’是值和类型都不相等</p>
+</blockquote>
+<h2 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h2><ul>
+<li>this 关键字表示类对象本身，如果在类内使用函数之类通过this来调用</li>
+<li>类的构造函数<em>constructor(valueA,valueB)</em>创建类的使用调用</li>
+<li>可以通过<em>static</em>和<em>Class.obj</em>两种方式创建静态变量</li>
+<li>类中定义的函数可以省略关键字<em>function</em></li>
+<li>通过<em>this.obj</em>来创建字段，可以在类的构造函数里面创建也可以在函数外创建，如果是未创建的字段其值为<em>undefined</em></li>
+<li>字段的只读和只写属性通过<em>get</em>和<em>set</em>关键字来声明，这里可以跟objective-C的方法类比。</li>
+<li>类的继承使用extend关键字，在子类里调用super就可以调用父类的函数。</li>
+<li>对象使用new来生成，还有一种情况是直接生成匿名类对象，用键值对的形式创建对象。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">   	name: <span class="string">'obj'</span>,</span><br><span class="line">   	value: <span class="string">'lalala'</span>,</span><br><span class="line">  	 	sayHello: <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">       	<span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name);</span><br><span class="line">   	&#125;,</span><br><span class="line">   	sayHi: (name) =&gt; &#123;</span><br><span class="line">       	<span class="built_in">console</span>.log(<span class="string">'Hi! '</span> + name);</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="文件的导入和导出"><a href="#文件的导入和导出" class="headerlink" title="文件的导入和导出"></a>文件的导入和导出</h2><p>首先说一下相对路径，使用 . 就是在当前路径查找，如果是..就是从上层路径查找，没有 . 或者 / 开头的就是从项目根目录开始查找。</p>
+<h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><p>导出的时候需要使用<em>export</em>关键字,可以到出变量、类、函数，可以定义默认导出内容，需要加上<em>export default</em>关键字</p>
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><p>导入文件使用关键字<em>import</em>,<em>from</em>格式是 <em>import [something] from ‘相对路径’</em> 。如果是没有使用默认导出的情况下可以根据需要接收需要的属性，一般是全部接收，如果有默认导出的话可以直接接收默认导出，并且默认导出是唯一的！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// data.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">'lala'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> age = <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// 如果只需要 value 和 name</span></span><br><span class="line"><span class="keyword">import</span> &#123;value, name&#125; <span class="keyword">from</span> <span class="string">'./data.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(value);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果想将所有由 export 导出的都引入</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> data <span class="keyword">from</span> <span class="string">'./data.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(data.value);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导入可以任意取名</span></span><br><span class="line"><span class="keyword">import</span> anyName <span class="keyword">from</span> <span class="string">'./data.js'</span></span><br><span class="line"><span class="built_in">console</span>.log(anyName);	</span><br></pre></td></tr></table></figure>    
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p><img src="http://o835bn5qj.bkt.clouddn.com/reactnativeLifeCycle.png" alt="liftCycle"><br>在整个ReactJS的生命周期中，主要经历4个阶段：创建阶段、实例化阶段、更新阶段和销毁阶段。</p>
+<h3 id="创建阶段"><a href="#创建阶段" class="headerlink" title="创建阶段"></a>创建阶段</h3><p>   这个阶段会调用<em>getDefaultProps</em>方法，并返回一个对象缓存下来，然后与父组件制定的props对象合并，最后赋值给this.props作为默认属性。</p>
+<blockquote>
+<p><em>props</em>是一个对象，是组件用来接收外面参数的，不支持在内部修改自己的<em>props</em>属性,只能通过父组件来赋值。<em>getDefaultProps</em>方法是用来设置默认值得。</p>
+</blockquote>
+<h3 id="实例化阶段"><a href="#实例化阶段" class="headerlink" title="实例化阶段"></a>实例化阶段</h3><p>该阶段是在实例化组件类的时候，也就是该组件类被调用的时候。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">React.render (</span><br><span class="line">	&lt;List name = "ReactJS"&gt;&lt;/List&gt;</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">"container"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们初始化了一个<em>List</em>组件，这个时候看一下依次调用的生命周期方法。</p>
+<ol>
+<li><em>getInitialState</em> 初始化组件的state值，其值会被赋值给this.state属性。</li>
+<li><em>componentWillMount</em> 组件即将被加载到视图上的时候调用，根据业务对state进行相应的操作</li>
+<li><em>render</em> 根据state的值，生成页面需要的虚拟DOM结构，并返回该结构。</li>
+<li><em>componentDidMount</em> 对根据虚拟DOM结构而生成的真是DOM进行相应的处理。为了保证不出现UI上的错误，在这个函数里面发起请求接收网络数据。这个时候改变this.state属性就会出发ReactJS内部的监听事件，再次调用<em>getInitialState</em>函数，这样的话再次刷新界面。</li>
+</ol>
+<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><p>这主要发生在用户操作之后或者父组件有更新的时候，此时会根据用户的操作进行相应的调整。</p>
+<ol>
+<li><em>componentWillReceiveProps(object nextProps)</em> 当组件接收到新的<em>props</em>时，会触发该函数。在该函数中通常可以调用<em>this.state</em>完成对<em>state</em>的修改。</li>
+<li><em>shouldComponentUpdate(nextProps nextState)</em> 该方法会拦截新的<em>props</em>和<em>state</em>，然后根据事先判定好的判断逻辑，做出最后要不要更新组件的决定。</li>
+<li><em>componentWillUpdate(object nextProps, object nextState)</em> 当方法2返回的是true的时候这里就做一些更新前的操作。</li>
+<li><em>render</em> 根据一系列的diff算法，生成需要更新的虚拟DOM数据。最好在这里进行数据和模板的整合，不进行state的操作。</li>
+<li><em>componentDidUpdate</em> 该方法在组件更新已经同步到DOM中后出发，我们通常在该方法中做一些DOM操作。</li>
+</ol>
+<h3 id="销毁阶段"><a href="#销毁阶段" class="headerlink" title="销毁阶段"></a>销毁阶段</h3><p><em>componentWillUnmount</em> 当组件从DOM中移除的时候调用这个方法，通常会在这个方法中做一些取消事件绑定，销毁定时器等工作。</p>
+<blockquote>
+<p>就相当于iOS中的dealloc函数。   </p>
+</blockquote>
+<h2 id="参考文章链接"><a href="#参考文章链接" class="headerlink" title="参考文章链接"></a>参考文章链接</h2><p><a href="http://blog.csdn.net/yuanguozhengjust/article/details/50470171" target="_blank" rel="external">http://blog.csdn.net/yuanguozhengjust/article/details/50470171</a><br><a href="https://lzxhahaha.gitbooks.io/react-native-getting-start/content/index.html" target="_blank" rel="external">https://lzxhahaha.gitbooks.io/react-native-getting-start/content/index.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wxpay001.JPG" alt="李旭 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay001.JPG" alt="李旭 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ReactNative/" rel="tag">#ReactNative</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/13/第一篇博客/" rel="next" title="第一篇博客">
+                <i class="fa fa-chevron-left"></i> 第一篇博客
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/13/React Native从最基础学起 /"
+           data-title="React Native从最基础学起" data-url="http://lixuzong.com/2016/06/13/React Native从最基础学起 /">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar_boy.JPG"
+               alt="李旭" />
+          <p class="site-author-name" itemprop="name">李旭</p>
+          <p class="site-description motion-element" itemprop="description">技术博客，记录技术成长历程</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础语法"><span class="nav-number">1.</span> <span class="nav-text">基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#var和let的区别"><span class="nav-number">1.1.</span> <span class="nav-text">var和let的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匿名函数的写法"><span class="nav-number">1.2.</span> <span class="nav-text">匿名函数的写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与-的区别"><span class="nav-number">1.3.</span> <span class="nav-text">==与===的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类与对象"><span class="nav-number">2.</span> <span class="nav-text">类与对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的导入和导出"><span class="nav-number">3.</span> <span class="nav-text">文件的导入和导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导出"><span class="nav-number">3.1.</span> <span class="nav-text">导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入"><span class="nav-number">3.2.</span> <span class="nav-text">导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期"><span class="nav-number">4.</span> <span class="nav-text">组件的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建阶段"><span class="nav-number">4.1.</span> <span class="nav-text">创建阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化阶段"><span class="nav-number">4.2.</span> <span class="nav-text">实例化阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新阶段"><span class="nav-number">4.3.</span> <span class="nav-text">更新阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#销毁阶段"><span class="nav-number">4.4.</span> <span class="nav-text">销毁阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章链接"><span class="nav-number">5.</span> <span class="nav-text">参考文章链接</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李旭</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lixuzong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("LmcLpoyKBiSKqLYbQwaMjP7G-gzGzoHsz", "lINfFog7AJpQ8RzJ5RrK285M");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
