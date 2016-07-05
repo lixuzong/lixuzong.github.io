@@ -4,6 +4,28 @@
   
     
     <entry>
+      <title><![CDATA[以iOS开发的角度了解HTTP系协议]]></title>
+      <url>http://lixuzong.com/2016/06/23/%E4%BB%8EiOS%E5%BC%80%E5%8F%91%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3HTTP/</url>
+      <content type="html"><![CDATA[<p>目前做iOS开发以来，使用的都是HTTP协议，所幸现在接触到的东西还是之前的知识储备所能够应付的，正好趁着还没有入职的这段时间补充点这方面的知识，当然还是从我比较熟悉的iOS的角度来进行学习。最近看的书是《图解HTTP》，也算是看了该书的一个总结吧。</p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/HTTP_book" alt="shouhuiImage"></p>
+<a id="more"></a>
+<h2 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h2><p>首先TCP/IP协议族不仅包括了TCP协议和IP协议，而是很多协议的总称。TCP/IP协议按照层次分为4层，分别是：应用层、传输层、网络层和数据链路层。HTTP协议在应用层，之后是传输层的TCP协议，然后是网络层的IP协议，数据链路层是与硬件相关的协议。HTTP协议规定一端是客户端，一端是服务器，这样的话数据流从客户端从上至下传输，每经过一层就加上报文头，到了服务器端之后数据流就会从下至上逐成解析。</p>
+<h1 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h1><p>为了准确无误的将数据送到目标处，并且能够确认数据最终是否送达到对方。为了实现这个目标，TCP采用三次握手的方式。</p>
+<p>结合实际中的例子比较容易理解三次握手是怎么实现的。比如在古代，A托商队给B一个东西，并且双方都要确认这条线路的安全性，那么A在这个东西里面放了一个标志SYN，B收到之后在东西里面放置了ACK表明B已经知道了，商队回来的时候将东西交还给A，A会看到自己放置的SYN和B放置的ACK，这样的话A就可以确认这条道路的安全性，但是这个时候B并不知道A收到了数据，所以这个时候A还需要在东西里放置ACK给B表明A收到了东西。简单的说就是每个端发送出东西的时候都要获得回应才能确认东西到达，所以就是三次。</p>
+<h1 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h1><p>IP协议的作用就是把各种数据包传给对方。为了能确保准确送达，所以需要IP地址和MAC地址，IP地址指明了节点被分配的地址，MAC地址指的是网卡所属的固定地址，IP地址可变换，但是MAC地址是不会改变的。所以IP间的通信就需要MAC地址，这里就需要知道IP地址和MAC地址的对应关系，所以又出现了另一种协议ARP（Address Resolution Protocol），能通过IP地址查询到MAC地址。</p>
+<h1 id="HTTP数据流程图"><a href="#HTTP数据流程图" class="headerlink" title="HTTP数据流程图"></a>HTTP数据流程图</h1><p><img src="http://o835bn5qj.bkt.clouddn.com/IMG_3842.JPG" alt="HTTP"></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[第一篇博客]]></title>
+      <url>http://lixuzong.com/2016/06/13/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+      <content type="html"><![CDATA[<p>马上就要毕业了，非常期待之后的职业生活，这里不仅仅会记录我的技术的成长过程，也会记录我的心路历程。另外每篇博客都会附一张手绘，不是我画的，是女朋友画的！</p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg" alt="shouhuiImage"></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[React Native从最基础学起]]></title>
       <url>http://lixuzong.com/2016/06/13/React%20Native%E4%BB%8E%E6%9C%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E8%B5%B7%20/</url>
       <content type="html"><![CDATA[<p>这篇文章主要讲的的内容是没有JavaScript基础的情况下开发React Native应用需要知道的基础知识。也是我在学习React Native框架的一个学习曲线。以方便记录下来方便查阅，一方面希望可以帮助到和我一样的菜鸟减少学习时间。</p>
@@ -62,14 +84,6 @@
 <p>就相当于iOS中的dealloc函数。   </p>
 </blockquote>
 <h2 id="参考文章链接"><a href="#参考文章链接" class="headerlink" title="参考文章链接"></a>参考文章链接</h2><p><a href="http://blog.csdn.net/yuanguozhengjust/article/details/50470171" target="_blank" rel="external">http://blog.csdn.net/yuanguozhengjust/article/details/50470171</a><br><a href="https://lzxhahaha.gitbooks.io/react-native-getting-start/content/index.html" target="_blank" rel="external">https://lzxhahaha.gitbooks.io/react-native-getting-start/content/index.html</a></p>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[第一篇博客]]></title>
-      <url>http://lixuzong.com/2016/06/13/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
-      <content type="html"><![CDATA[<p>马上就要毕业了，非常期待之后的职业生活，这里不仅仅会记录我的技术的成长过程，也会记录我的心路历程。另外每篇博客都会附一张手绘，不是我画的，是女朋友画的！</p>
-<p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg" alt="shouhuiImage"></p>
 ]]></content>
     </entry>
     
