@@ -6,7 +6,7 @@
     <entry>
       <title><![CDATA[React Native开源项目笔记]]></title>
       <url>http://lixuzong.com/2016/07/15/react-native%E5%AE%9E%E6%88%98/</url>
-      <content type="html"><![CDATA[<p>首先放上开源项目的地址：<a href="https://github.com/ljunb/react-native-iShiWuPai" target="_blank" rel="external">React-Native开源项目iShiWuPai</a></p>
+      <content type="html"><![CDATA[<p>首先放上开源项目的地址：<a href="https://github.com/ljunb/react-native-iShiWuPai" target="_blank" rel="external">React-Native开源项目iShiWuPai</a><br>这边笔记主要是记录看开源项目iShiWuPai之后的一些知识点。前端的话一般都是使用的MVC框架，这样的话我也是从这三个方面学习，这个项目中的数据的话用的是Redux框架，View的话就是使用ReactNative框架。</p>
 <a id="more"></a>
 <h2 id="index-ios-js文件"><a href="#index-ios-js文件" class="headerlink" title="index.ios.js文件"></a>index.ios.js文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppRegistry &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line"><span class="keyword">import</span> Root <span class="keyword">from</span> <span class="string">'./app/root'</span>;</span><br><span class="line"></span><br><span class="line">AppRegistry.registerComponent(<span class="string">'iShiWuPai'</span>, () =&gt; Root);</span><br></pre></td></tr></table></figure>
 <p><em>Root</em> 文件是主入口，<em>AppRegister.registerComponent（）</em> 方法是用来注册ReactNative，第一个字符串要和iOS项目中注册的一致，第二个传入的是根类。</p>
