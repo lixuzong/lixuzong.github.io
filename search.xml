@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[React Native开源项目笔记]]></title>
+      <title><![CDATA[React Native开源项目笔记(1):redux管理数据]]></title>
       <url>http://lixuzong.com/2016/07/15/react-native%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<p>首先放上开源项目的地址：<a href="https://github.com/ljunb/react-native-iShiWuPai" target="_blank" rel="external">React-Native开源项目iShiWuPai</a><br>这边笔记主要是记录看开源项目iShiWuPai之后的一些知识点。前端的话一般都是使用的MVC框架，这样的话我也是从这三个方面学习，这个项目中的数据的话用的是Redux框架，View的话就是使用ReactNative框架。</p>
 <p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg" alt="手绘"></p>
