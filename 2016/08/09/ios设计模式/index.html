@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -90,15 +90,16 @@
 
 
 
-<meta name="description" content="技术博客，记录技术成长历程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lixuzong's Blog">
-<meta property="og:url" content="http://lixuzong.com/categories/技术/index.html">
+<meta name="description" content="以iOS的实现为切入点来讲一下设计模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ios中的设计模式实现(持续更新...)">
+<meta property="og:url" content="http://lixuzong.com/2016/08/09/ios设计模式/index.html">
 <meta property="og:site_name" content="Lixuzong's Blog">
-<meta property="og:description" content="技术博客，记录技术成长历程">
+<meta property="og:description" content="以iOS的实现为切入点来讲一下设计模式。">
+<meta property="og:updated_time" content="2016-08-09T14:54:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lixuzong's Blog">
-<meta name="twitter:description" content="技术博客，记录技术成长历程">
+<meta name="twitter:title" content="ios中的设计模式实现(持续更新...)">
+<meta name="twitter:description" content="以iOS的实现为切入点来讲一下设计模式。">
 
 
 
@@ -116,7 +117,7 @@
   };
 </script>
 
-  <title> 分类: 技术 | Lixuzong's Blog </title>
+  <title> ios中的设计模式实现(持续更新...) | Lixuzong's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -146,7 +147,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -267,54 +268,249 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        技术
-        <small>分类</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ios中的设计模式实现(持续更新...)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-09T22:45:09+08:00" content="2016-08-09">
+              2016-08-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/移动开发/" itemprop="url" rel="index">
+                    <span itemprop="name">移动开发</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/09/ios设计模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/09/ios设计模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/09/ios设计模式/" class="leancloud_visitors" data-flag-title="ios中的设计模式实现(持续更新...)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>以iOS的实现为切入点来讲一下设计模式。</p>
+<a id="more"></a>
+<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
+<p>工厂方法模式： 定义创建对象的接口，让子类决定实例化哪一个类，工厂方法使得一个类的实例化延迟到其子类。</p>
+</blockquote>
+<p>在<a href="http://item.jd.com/11402853.html" target="_blank" rel="external">《Effective Objective-C 2.0：编写高质量iOS与OS X代码的52个有效方法》</a>中也有提及到的虚拟工厂方法，在iOS里面叫做类族，比较典型的类就是我们经常使用的NSArray类，通常我们会认为NSArray是一个类，提供了一些方法，但是在NSArray类里面获得确实其子类的实例，这就是一个典型的工厂模式。具体的话书上讲的很清楚。</p>
+<h3 id="何时使用"><a href="#何时使用" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>编译时无法准确预期要创建的对象的类。</li>
+<li>类想让其子类决定在运行时创建什么。</li>
+<li>类若有若干辅助类为其子类，而你想将返回哪个子类这一信息局部化。</li>
+</ul>
+<p>##生成器模式</p>
+<blockquote>
+<p>生成器模式：将一个复杂对象的构建与他的表现分离，使得同样的构建过程可以创建不同的表现。</p>
+</blockquote>
+<p>根据我的理解，就是单独使用一个类来管理复杂对象，这样的话就会将构建与表现分离了。<a href="https://github.com/lixuzong/BuilderPattern" target="_blank" rel="external">Demo在这里</a></p>
+<h3 id="何时使用-1"><a href="#何时使用-1" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>需要创建设计各种部件的复杂对象。创建对象的算法应该独立于部件的装配方式。常见例子是构建组合对象。</li>
+<li>构建过程需要以不同的方式（例如，部件或表现的不同组合）构建对象。</li>
+</ul>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><blockquote>
+<p>单例模式： 保证一个类只有一个实例，并提供一个访问他的全局访问点。</p>
+</blockquote>
+<p>单例模式是iOS里面比较常用的设计模式。一般我们平时要求不是很严格的时候是这样写的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static Character *character;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[self alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <em>dispatch_once</em> 是为了线程安全，这个也可以用加锁来解决，但一般是交给GCD来实现，会做部分的优化。为什么会说是不严格的单例的，主要是以下两个方面：</p>
+<ul>
+<li>发起调用的对象不能以其他分配方式实例化单例对象。否则，有可能创建单例的多个实例。</li>
+<li>对单例对象实例化的限制应该与引用计数内存模型共存。</li>
+</ul>
+<p>因为ARC目前已经完全取代了MRC所以第二点也就没有必要考虑了，但是仍然需要考虑创建对象的唯一性。也看到有一种方式直接在其他创建对象的方法中强制抛出异常，个人认为是不可取的。一言不合就贴代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static Character *character;</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[super allocWithZone:NULL] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self shareCharacter];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)copy &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里如要是对内存做了限制，首先说一下生成对象的两种方式 <em>[Character shareCharacter]</em> 和<em>[[Character alloc] init]</em> 需要让两种方法都返回的是同一块内存地址，因为objective-c采用的是两段式的初始化方法，所有只要控制 + (instancetype)allocWithZone:(struct _NSZone *)zone 返回同样的内存地址就可以了。</p>
+<blockquote>
+<p>这里碰到了一个疑惑就是在网上看到 <em>- (instancetype)copy {return self;}</em> 的另一个版本是 <em>- (instancetype)copy {return character;}</em> 就有点困惑self的指代问题，通过 <em>[self shareCharacter]</em> 可以看出self指代的是当前的类，怎么在返回的时候是一个对象那？后来查了下资料并结合ios runtime的特性，原来self是在运行的时候动态决定其指代的，可以是当前类，也可以是当前的对象。</p>
+</blockquote>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><blockquote>
+<p>适配器模式：将一个类的接口转换成客户希望的另一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的类可以一起工作</p>
+</blockquote>
+<p>适配器模式在ios里面的实现分为两种，分别是类适配器和对象适配器。假设我们有A类，B类，把A类当成客户，但是A类不能直接调用B类的接口，所以需要一个适配器C类。</p>
+<ul>
+<li>类适配器：将适配器C类继承于B类，对A暴露相关功能的接口。</li>
+<li>对象适配器：适配器C类拥有B类的实例，对A暴露相关功能的接口。</li>
+</ul>
+<blockquote>
+<p>在使用的过程中不使用适配器模式也能实现功能，A类直接拥有B类的对象，将参数传给B类也是能够实现功能的，但是就形成了强耦合关系，使用适配器模式主要是为了解耦合。在实际应用中我发现已经不自觉地使用了该设计模式，也算是比较常用的设计模式，只是这里抽象出来了而已。</p>
+</blockquote>
+<h3 id="delegate是对象适配器"><a href="#delegate是对象适配器" class="headerlink" title="delegate是对象适配器"></a>delegate是对象适配器</h3><p>如果用delegate来实现适配器模式的话，那么从分类上来说应该是对象适配器，Demo这里就没有写，一般我们使用delegate的时候很大部分情况是适配器模式。</p>
+<h3 id="Block实现对象适配器"><a href="#Block实现对象适配器" class="headerlink" title="Block实现对象适配器"></a>Block实现对象适配器</h3><p>使用delegate的方法都是可以用block来改写了，那么这里就不多说了。</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/07/15/react-native实战/" itemprop="url">
-              
-                <span itemprop="name">React Native开源项目笔记(1):redux管理数据</span>
-              
-            </a>
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wxpay001.JPG" alt="李旭 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay001.JPG" alt="李旭 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-07-15T12:34:34+08:00"
-              content="2016-07-15" >
-          07-15
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/09/知识点汇总/" rel="next" title="iOS知识点汇总(持续更新...)">
+                <i class="fa fa-chevron-left"></i> iOS知识点汇总(持续更新...)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
+      
+    </div>
+  </div>
 
 
           </div>
           
 
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/09/ios设计模式/"
+           data-title="ios中的设计模式实现(持续更新...)" data-url="http://lixuzong.com/2016/08/09/ios设计模式/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -334,8 +530,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar_boy.JPG"
@@ -385,6 +590,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式"><span class="nav-number">1.</span> <span class="nav-text">工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#何时使用"><span class="nav-number">1.1.</span> <span class="nav-text">何时使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时使用-1"><span class="nav-number">1.2.</span> <span class="nav-text">何时使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单例模式"><span class="nav-number">2.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器模式"><span class="nav-number">3.</span> <span class="nav-text">适配器模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#delegate是对象适配器"><span class="nav-number">3.1.</span> <span class="nav-text">delegate是对象适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block实现对象适配器"><span class="nav-number">3.2.</span> <span class="nav-text">Block实现对象适配器</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -488,6 +704,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
