@@ -8,7 +8,17 @@
       <url>http://lixuzong.com/2016/08/09/ios%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>以iOS的实现为切入点来讲一下设计模式。</p>
 <a id="more"></a>
-<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
+<p>大部分的Demo可以在这里查看：<a href="https://github.com/lixuzong/iosPatternDemo" target="_blank" rel="external">Demo在这里</a></p>
+<p>首先先讲一下大概的设计模式的分类。</p>
+<ul>
+<li>1、对象创建，主要是生成对象的方法。</li>
+<li>2、接口适配，为了解决两个类之间接口不吻合</li>
+<li>3、对象去耦，对象去耦合有利于代码的复用</li>
+<li>4、抽象集合，将要用的组合抽离出来，主要有组合模式</li>
+<li>5、行为扩展，在已有功能的基础上扩展功能</li>
+<li>6、算法封装</li>
+</ul>
+<h1 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h1><h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
 <p>工厂方法模式： 定义创建对象的接口，让子类决定实例化哪一个类，工厂方法使得一个类的实例化延迟到其子类。</p>
 </blockquote>
 <p>在<a href="http://item.jd.com/11402853.html" target="_blank" rel="external">《Effective Objective-C 2.0：编写高质量iOS与OS X代码的52个有效方法》</a>中也有提及到的虚拟工厂方法，在iOS里面叫做类族，比较典型的类就是我们经常使用的NSArray类，通常我们会认为NSArray是一个类，提供了一些方法，但是在NSArray类里面获得确实其子类的实例，这就是一个典型的工厂模式。具体的话书上讲的很清楚。</p>
@@ -17,11 +27,37 @@
 <li>类想让其子类决定在运行时创建什么。</li>
 <li>类若有若干辅助类为其子类，而你想将返回哪个子类这一信息局部化。</li>
 </ul>
-<p>##生成器模式</p>
-<blockquote>
+<h2 id="抽象工程模式"><a href="#抽象工程模式" class="headerlink" title="抽象工程模式"></a>抽象工程模式</h2><blockquote>
+<p>提供一个创建一系列相关或者相互依赖的接口的对象，而无需指定他们具体的类。</p>
+</blockquote>
+<p>说到抽象工厂模式的话，就是要与工厂方法比较一下。</p>
+<table>
+<thead>
+<tr>
+<th>抽象工厂</th>
+<th>工厂方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通过对象组合创建抽象产品</td>
+<td>通过类继承创建抽象产品</td>
+</tr>
+<tr>
+<td>创建多系列产品</td>
+<td>创建一种产品</td>
+</tr>
+<tr>
+<td>必须修改父类的接口才能支持新的产品</td>
+<td>子类化创建者并重载工厂方法以创建新的产品</td>
+</tr>
+</tbody>
+</table>
+<p>假设你现在正在看Demo的话，这里可以简单的说一下。其实抽象工厂就是在工厂方法的基础上将具体的类型也隐藏起来。所以工厂方法里需要知道之类的类型才能够创建对象，而抽象工厂不需要知道具体的子类的类型就可以直接通过父类的方法创建子类对象，所以是在工厂方法的基础上又抽象了一层。</p>
+<h2 id="生成器模式"><a href="#生成器模式" class="headerlink" title="生成器模式"></a>生成器模式</h2><blockquote>
 <p>生成器模式：将一个复杂对象的构建与他的表现分离，使得同样的构建过程可以创建不同的表现。</p>
 </blockquote>
-<p>根据我的理解，就是单独使用一个类来管理复杂对象，这样的话就会将构建与表现分离了。<a href="https://github.com/lixuzong/BuilderPattern" target="_blank" rel="external">Demo在这里</a></p>
+<p>根据我的理解，就是单独使用一个类来管理生成对象，client并不需要自己创建对象，只需要告诉生成器我需要什么样的对象，这样生成器就会根据需求创建响应的对象。这样的话就会将构建与表现分离了。<a href="https://github.com/lixuzong/BuilderPattern" target="_blank" rel="external">Demo在这里</a></p>
 <h3 id="何时使用-1"><a href="#何时使用-1" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
 <li>需要创建设计各种部件的复杂对象。创建对象的算法应该独立于部件的装配方式。常见例子是构建组合对象。</li>
 <li>构建过程需要以不同的方式（例如，部件或表现的不同组合）构建对象。</li>
@@ -38,11 +74,11 @@
 </ul>
 <p>因为ARC目前已经完全取代了MRC所以第二点也就没有必要考虑了，但是仍然需要考虑创建对象的唯一性。也看到有一种方式直接在其他创建对象的方法中强制抛出异常，个人认为是不可取的。一言不合就贴代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static Character *character;</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[super allocWithZone:NULL] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self shareCharacter];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)copy &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里如要是对内存做了限制，首先说一下生成对象的两种方式 <em>[Character shareCharacter]</em> 和<em>[[Character alloc] init]</em> 需要让两种方法都返回的是同一块内存地址，因为objective-c采用的是两段式的初始化方法，所有只要控制 + (instancetype)allocWithZone:(struct _NSZone *)zone 返回同样的内存地址就可以了。</p>
+<p>这里如要是对内存做了限制，首先说一下生成对象的两种方式 <em>[Character shareCharacter]</em> 和 <em>[[Character alloc] init]</em> 需要让两种方法都返回的是同一块内存地址，因为objective-c采用的是两段式的初始化方法，所有只要控制 <em>+ (instancetype)allocWithZone:(struct _NSZone </em>)zone* 返回同样的内存地址就可以了。</p>
 <blockquote>
-<p>这里碰到了一个疑惑就是在网上看到 <em>- (instancetype)copy {return self;}</em> 的另一个版本是 <em>- (instancetype)copy {return character;}</em> 就有点困惑self的指代问题，通过 <em>[self shareCharacter]</em> 可以看出self指代的是当前的类，怎么在返回的时候是一个对象那？后来查了下资料并结合ios runtime的特性，原来self是在运行的时候动态决定其指代的，可以是当前类，也可以是当前的对象。</p>
+<p>这里碰到了一个疑惑就是在网上看到 <em>- (instancetype)copy {return self;}</em> 的另一个版本是 <em>- (instancetype)copy {return character;}</em> 就有点困惑self的指代问题，通过 <em>[self shareCharacter]</em> 可以看出self指代的是当前的类，怎么在返回的时候是一个对象那？后来查了下资料并结合ios runtime的特性，原来self是在运行的时候动态决定其指代的，可以是当前类，也可以是当前的对象。那么这里的理解就是在类方法里面就是当前类，在实例方法里面就是当前对象。</p>
 </blockquote>
-<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><blockquote>
+<h1 id="接口适配"><a href="#接口适配" class="headerlink" title="接口适配"></a>接口适配</h1><h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><blockquote>
 <p>适配器模式：将一个类的接口转换成客户希望的另一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的类可以一起工作</p>
 </blockquote>
 <p>适配器模式在ios里面的实现分为两种，分别是类适配器和对象适配器。假设我们有A类，B类，把A类当成客户，但是A类不能直接调用B类的接口，所以需要一个适配器C类。</p>
@@ -55,6 +91,39 @@
 </blockquote>
 <h3 id="delegate是对象适配器"><a href="#delegate是对象适配器" class="headerlink" title="delegate是对象适配器"></a>delegate是对象适配器</h3><p>如果用delegate来实现适配器模式的话，那么从分类上来说应该是对象适配器，Demo这里就没有写，一般我们使用delegate的时候很大部分情况是适配器模式。</p>
 <h3 id="Block实现对象适配器"><a href="#Block实现对象适配器" class="headerlink" title="Block实现对象适配器"></a>Block实现对象适配器</h3><p>使用delegate的方法都是可以用block来改写了，那么这里就不多说了。</p>
+<h3 id="何时使用-2"><a href="#何时使用-2" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>已有类的接口与需求不匹配。</li>
+<li>想要一个可复用的类，该类能够同可能带有不兼容接口的其他类协作。</li>
+<li>需要适配一个类的几个不同子类，可是让每一个子类去子类化一个类适配器又不实现。那么可以使用对象适配器（也叫委托）来适配其父类的接口。</li>
+</ul>
+<h2 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h2><blockquote>
+<p>将抽象部分与他的实现部分分离，使他们可以独立的变化。</p>
+</blockquote>
+<p>桥接模式简单的说就是在两个类之间通讯的时候是通过抽象父类来实现的，就是说抽象父类接口不变的情况下，我们修改其具体子类是不会影响两边的。<a href="https://github.com/lixuzong/BridgePattern" target="_blank" rel="external">Demo地址在这</a>。与书上的代码稍微有些差异，因为通过抽象父类来调用具体子类的方式上有疑问，这里是给父类添加了一个初始化方法，在这个方法里面直接返回子类的对象。（有点像工厂模式）。</p>
+<h3 id="何时使用-3"><a href="#何时使用-3" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>不想在抽象与其实现之间形成固定的绑定关系（这样就能在运行时切换实现）。</li>
+<li>抽象及其实现都应通过子类化独立进行扩展。</li>
+<li>对抽象的实现进行修改不应该影响客户端代码。</li>
+<li>如果每个实现需要额外的子类以细化抽象，则说明有必要把他们分成两个部分。</li>
+<li>想要带有不同抽象接口的多个对象之间共享一个实现。</li>
+</ul>
+<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><blockquote>
+<p>为系统中的一组接口提供一个统一的接口。外观定义一个高层接口，让子系统更容易使用。</p>
+</blockquote>
+<p>简单的说就是将一组功能抽象出来，只对外暴露一个接口。高度的抽象。</p>
+<h3 id="何时使用-4"><a href="#何时使用-4" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>子系统正在逐渐变得复杂。应用模式过程中演化出许多类。可以使用外观为这些子系统提供给一个较简单的接口。</li>
+<li>可以使用外观对子系统分层。每个子系统级别有一个外观作为入口点。让它们通过其外观进行通信，可以简化他们的依赖关系。</li>
+</ul>
+<h1 id="对象去耦"><a href="#对象去耦" class="headerlink" title="对象去耦"></a>对象去耦</h1><h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><blockquote>
+<p>中介者模式： 用一个对象来封装一系列对象的交互方式。中介者使得个对象不需要显示的相互引用，从而使得耦合松散，而且可以独立地改变他们之间的交互。</p>
+</blockquote>
+<p>简单的说就是单独使用一个对象C来管理A对象和B对象之间的交互或者说将A和B中较为复杂的逻辑抽象出来。减少A和B之间的耦合，便于A和B对象的重用。</p>
+<h3 id="何时使用中介者模式"><a href="#何时使用中介者模式" class="headerlink" title="何时使用中介者模式"></a>何时使用中介者模式</h3><ul>
+<li>对象之间的交互虽然定义明确但是非常复杂，导致一组对象项目依赖并且难以理解。</li>
+<li>因为对象引用了许多其他对象并与其通信，导致对象难以复用。</li>
+<li>想要定制一个分布在多个类中的逻辑或行为，又不想生成太多的子类。</li>
+</ul>
 ]]></content>
     </entry>
     
