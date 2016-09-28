@@ -18,7 +18,14 @@
 </ul>
 <p><img src="http://o835bn5qj.bkt.clouddn.com/%E4%B9%A6.png" alt="设计模式"></p>
 <a id="more"></a>
-<h1 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h1><h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
+<h1 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h1><ul>
+<li>原型</li>
+<li>工厂方法</li>
+<li>抽象工厂</li>
+<li>生成器</li>
+<li>单例</li>
+</ul>
+<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
 <p>工厂方法模式： 定义创建对象的接口，让子类决定实例化哪一个类，工厂方法使得一个类的实例化延迟到其子类。</p>
 </blockquote>
 <p>首先先看一下类图：<br><img src="http://o835bn5qj.bkt.clouddn.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95.png" alt="工厂方法"></p>
@@ -73,19 +80,24 @@
 </blockquote>
 <p><img src="http://o835bn5qj.bkt.clouddn.com/%E5%8D%95%E4%BE%8B.png" alt="单例模式"></p>
 <p>单例模式是iOS里面比较常用的设计模式。一般我们平时要求不是很严格的时候是这样写的：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    <span class="keyword">static</span> Character *character;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> character;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static Character *character;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[self alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用 <em>dispatch_once</em> 是为了线程安全，这个也可以用加锁来解决，但一般是交给GCD来实现，会做部分的优化。为什么会说是不严格的单例的，主要是以下两个方面：</p>
 <ul>
 <li>发起调用的对象不能以其他分配方式实例化单例对象。否则，有可能创建单例的多个实例。</li>
 <li>对单例对象实例化的限制应该与引用计数内存模型共存。</li>
 </ul>
 <p>因为ARC目前已经完全取代了MRC所以第二点也就没有必要考虑了，但是仍然需要考虑创建对象的唯一性。也看到有一种方式直接在其他创建对象的方法中强制抛出异常，个人认为是不可取的。一言不合就贴代码：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> Character *character;</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[<span class="keyword">super</span> allocWithZone:<span class="literal">NULL</span>] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> character;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> shareCharacter];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)<span class="keyword">copy</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static Character *character;</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[super allocWithZone:NULL] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self shareCharacter];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)copy &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里如要是对内存做了限制，首先说一下生成对象的两种方式 <em>[Character shareCharacter]</em> 和 <em>[[Character alloc] init]</em> 需要让两种方法都返回的是同一块内存地址，因为objective-c采用的是两段式的初始化方法，所有只要控制 <em>+ (instancetype)allocWithZone:(struct _NSZone </em>)zone* 返回同样的内存地址就可以了。</p>
 <blockquote>
 <p>这里碰到了一个疑惑就是在网上看到 <em>- (instancetype)copy {return self;}</em> 的另一个版本是 <em>- (instancetype)copy {return character;}</em> 就有点困惑self的指代问题，通过 <em>[self shareCharacter]</em> 可以看出self指代的是当前的类，怎么在返回的时候是一个对象那？后来查了下资料并结合ios runtime的特性，原来self是在运行的时候动态决定其指代的，可以是当前类，也可以是当前的对象。那么这里的理解就是在类方法里面就是当前类，在实例方法里面就是当前对象。</p>
 </blockquote>
-<h1 id="接口适配"><a href="#接口适配" class="headerlink" title="接口适配"></a>接口适配</h1><h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><blockquote>
+<h1 id="接口适配"><a href="#接口适配" class="headerlink" title="接口适配"></a>接口适配</h1><ul>
+<li>适配器</li>
+<li>桥接</li>
+<li>外观</li>
+</ul>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><blockquote>
 <p>适配器模式：将一个类的接口转换成客户希望的另一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的类可以一起工作</p>
 </blockquote>
 <p>适配器模式在ios里面的实现分为两种，分别是类适配器和对象适配器。假设我们有A类，B类，把A类当成客户，但是A类不能直接调用B类的接口，所以需要一个适配器C类。</p>
@@ -127,7 +139,11 @@
 <li>子系统正在逐渐变得复杂。应用模式过程中演化出许多类。可以使用外观为这些子系统提供给一个较简单的接口。</li>
 <li>可以使用外观对子系统分层。每个子系统级别有一个外观作为入口点。让它们通过其外观进行通信，可以简化他们的依赖关系。</li>
 </ul>
-<h1 id="对象去耦"><a href="#对象去耦" class="headerlink" title="对象去耦"></a>对象去耦</h1><h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><blockquote>
+<h1 id="对象去耦"><a href="#对象去耦" class="headerlink" title="对象去耦"></a>对象去耦</h1><ul>
+<li>中介者</li>
+<li>观察者</li>
+</ul>
+<h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><blockquote>
 <p>中介者模式： 用一个对象来封装一系列对象的交互方式。中介者使得个对象不需要显示的相互引用，从而使得耦合松散，而且可以独立地改变他们之间的交互。</p>
 </blockquote>
 <p><img src="http://o835bn5qj.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="中介者模式"></p>
@@ -142,7 +158,11 @@
 </blockquote>
 <p><img src="http://o835bn5qj.bkt.clouddn.com/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="观察者模式"></p>
 <p>观察者模式在iOS里面的使用频率比较多，框架也已经帮我们实现了方便使用的方式。首先是NSNotificationCenter，再者还有KVO，所以基本已经可以满足我们的需求。目的就是解除观察者和被观察者之间的关系。</p>
-<h1 id="抽象集合"><a href="#抽象集合" class="headerlink" title="抽象集合"></a>抽象集合</h1><h2 id="组合模式（Composite）"><a href="#组合模式（Composite）" class="headerlink" title="组合模式（Composite）"></a>组合模式（Composite）</h2><blockquote>
+<h1 id="抽象集合"><a href="#抽象集合" class="headerlink" title="抽象集合"></a>抽象集合</h1><ul>
+<li>组合</li>
+<li>迭代器</li>
+</ul>
+<h2 id="组合模式（Composite）"><a href="#组合模式（Composite）" class="headerlink" title="组合模式（Composite）"></a>组合模式（Composite）</h2><blockquote>
 <p>将对象组合成树形结构以表示“部分-整体”的层次结构。组合使得用户对单个对象和组合对象的使用具有一致性。</p>
 </blockquote>
 <p><img src="http://o835bn5qj.bkt.clouddn.com/%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84.png" alt="树形结构"></p>
@@ -151,6 +171,30 @@
 <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><blockquote>
 <p>提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示</p>
 </blockquote>
+<p>苹果公司用自己的命名规则“枚举器/枚举”改写了迭代器模式，用于相关基础类的方法。基础框架中的NSEnumerator类实现了迭代器模式。NSArray，NSSet，NSDictionary这样的集合类，定义了返回与集合的类型想响应的NSEnumerator子类实例的方法。用我这种比较通俗的说法就是，提供了一种遍历集合类的方法。也就是迭代器模式。</p>
+<blockquote>
+<p>基本上有两种迭代器：外部迭代器和内部迭代器。外部迭代器让client直接操作迭代过程，所以client需要知道外部迭代器才能使用。另一种情况是，集合对象（被迭代的目标对象）在其内部维护并操作了一个外部迭代器。提供内部迭代器的典型的集合对象为client定义一个接口，或者从底层集合一次访问一个元素，或者向每个元素发送消息。比如NSArray 的  <em>- （void）makeObjectsPerformSelector:(SEL)aSelector</em> 就是内部迭代器。就是不需要知道迭代器，在内部都遍历并实现操作。</p>
+</blockquote>
+<h3 id="何时使用-5"><a href="#何时使用-5" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>需要访问组合对象的内容，而又不暴露内部表示。</li>
+<li>需要通过多种方式暴露组合对象。</li>
+<li>需要提供一个统一的接口，来遍历各种类型的组合对象。</li>
+</ul>
+<h1 id="行为扩展"><a href="#行为扩展" class="headerlink" title="行为扩展"></a>行为扩展</h1><ul>
+<li>访问者模式</li>
+<li>装饰</li>
+<li>责任链</li>
+</ul>
+<h2 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h2><blockquote>
+<p>表示一个作用于某对象结构中的各元素的操作。它让我们可以在不改变各元素类的前提下定义作用于这些元素的新操作。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="访问者模式"></p>
+<p>解释一下访问者模式，就是将自己不熟悉的业务承包出去。比如说我们的家是一个类，对于里面的下水道我们就有各种使用的方法，但是关于修理下水道我们要承包出去，找专业的人来对他进行操作，而这个维修的操做不能影响我们现在的使用。所以这就是访问者模式，承包商就是访问者。这样比较容易理解。<br>从类图上可以看出来，Element调用 <em>acceptVister:</em> 方法将自身传递给vister，vister接收之后就可以对其进行操作。从而可以获得行为的扩展。</p>
+<h3 id="何时使用访问者模式"><a href="#何时使用访问者模式" class="headerlink" title="何时使用访问者模式"></a>何时使用访问者模式</h3><ul>
+<li>一个复杂的对象结构包含很多其他的对象，它们有不同的接口（比如组合体），但是相对这些对象实施一些依赖其具体类型的操作。</li>
+<li>需要对一个组合结构中的对象进行很多不相关的操作，但是不想让这些操作“污染”这些对象的类。可以将相关的操作集中起来，定义在一个访问者类中，并在需要在访问者中定义的操作时使用它。</li>
+<li>定义复杂结构的类很少作修改，但是经常需要向其添加新的操作。</li>
+</ul>
 ]]></content>
     </entry>
     

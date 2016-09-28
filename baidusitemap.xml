@@ -5,6 +5,26 @@
     
     
   <url>
+    <loc>http://lixuzong.com/2016/08/15/ios%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2016-09-28T09:25:04.000Z</lastmod>
+    <data>
+        <display>
+        <title>ios中的设计模式实现</title>
+        <pubTime>2016-08-15T03:10:12.000Z</pubTime>
+        
+        <tag>设计模式,iOS</tag>
+         
+         
+           
+             
+              <breadCrumb title="移动开发" url="http://lixuzong.com/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://lixuzong.com/2016/06/13/React%20Native%E4%BB%8E%E6%9C%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E8%B5%B7%20/</loc>
     <lastmod>2016-09-11T02:54:17.000Z</lastmod>
     <data>
@@ -33,26 +53,6 @@
         <pubTime>2016-08-09T14:45:09.000Z</pubTime>
         
         <tag>iOS</tag>
-         
-         
-           
-             
-              <breadCrumb title="移动开发" url="http://lixuzong.com/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://lixuzong.com/2016/08/15/ios%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2016-09-11T02:51:03.000Z</lastmod>
-    <data>
-        <display>
-        <title>ios中的设计模式实现</title>
-        <pubTime>2016-08-15T03:10:12.000Z</pubTime>
-        
-        <tag>设计模式,iOS</tag>
          
          
            
