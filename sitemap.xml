@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://lixuzong.com/about/index.html</loc>
+    
+    <lastmod>2016-09-28T09:32:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://lixuzong.com/2016/06/13/React%20Native%E4%BB%8E%E6%9C%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E8%B5%B7%20/</loc>
     
     <lastmod>2016-09-11T02:54:17.000Z</lastmod>
@@ -37,14 +44,7 @@
   </url>
   
   <url>
-    <loc>http://lixuzong.com/categories/index.html</loc>
-    
-    <lastmod>2016-06-13T07:30:45.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lixuzong.com/about/index.html</loc>
+    <loc>http://lixuzong.com/tags/index.html</loc>
     
     <lastmod>2016-06-13T07:30:45.000Z</lastmod>
     
@@ -58,7 +58,7 @@
   </url>
   
   <url>
-    <loc>http://lixuzong.com/tags/index.html</loc>
+    <loc>http://lixuzong.com/categories/index.html</loc>
     
     <lastmod>2016-06-13T07:30:45.000Z</lastmod>
     
