@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ios中的设计模式实现 | Lixuzong&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="大部分的Demo可以在这里查看：Demo在这里
+首先先讲一下大概的设计模式的分类。
+
+1、对象创建，主要是生成对象的方法。
+2、接口适配，为了解决两个类之间接口不吻合
+3、对象去耦，对象去耦合有利于代码的复用
+4、抽象集合，将要用的组合抽离出来，主要有组合模式
+5、行为扩展，在已有功能的基础上扩展功能
+6、算法封装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ios中的设计模式实现">
+<meta property="og:url" content="http://lixuzong.com/2016/08/15/ios设计模式/index.html">
+<meta property="og:site_name" content="Lixuzong's Blog">
+<meta property="og:description" content="大部分的Demo可以在这里查看：Demo在这里
+首先先讲一下大概的设计模式的分类。
+
+1、对象创建，主要是生成对象的方法。
+2、接口适配，为了解决两个类之间接口不吻合
+3、对象去耦，对象去耦合有利于代码的复用
+4、抽象集合，将要用的组合抽离出来，主要有组合模式
+5、行为扩展，在已有功能的基础上扩展功能
+6、算法封装">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E4%B9%A6.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E7%94%9F%E6%88%90%E5%99%A8.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E5%8D%95%E4%BE%8B.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:updated_time" content="2016-11-04T01:51:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ios中的设计模式实现">
+<meta name="twitter:description" content="大部分的Demo可以在这里查看：Demo在这里
+首先先讲一下大概的设计模式的分类。
+
+1、对象创建，主要是生成对象的方法。
+2、接口适配，为了解决两个类之间接口不吻合
+3、对象去耦，对象去耦合有利于代码的复用
+4、抽象集合，将要用的组合抽离出来，主要有组合模式
+5、行为扩展，在已有功能的基础上扩展功能
+6、算法封装">
+<meta name="twitter:image" content="http://o835bn5qj.bkt.clouddn.com/%E4%B9%A6.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Lixuzong&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Lixuzong&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">do myself!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lixuzong.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/15/ios设计模式/" class="article-date">
+  <time datetime="2016-08-15T03:10:12.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ios中的设计模式实现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>大部分的Demo可以在这里查看：<a href="https://github.com/lixuzong/iosPatternDemo" target="_blank" rel="external">Demo在这里</a></p>
+<p>首先先讲一下大概的设计模式的分类。</p>
+<ul>
+<li>1、对象创建，主要是生成对象的方法。</li>
+<li>2、接口适配，为了解决两个类之间接口不吻合</li>
+<li>3、对象去耦，对象去耦合有利于代码的复用</li>
+<li>4、抽象集合，将要用的组合抽离出来，主要有组合模式</li>
+<li>5、行为扩展，在已有功能的基础上扩展功能</li>
+<li>6、算法封装</li>
+</ul>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E4%B9%A6.png" alt="设计模式"></p>
+<a id="more"></a>
+<h1 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h1><ul>
+<li>原型</li>
+<li>工厂方法</li>
+<li>抽象工厂</li>
+<li>生成器</li>
+<li>单例</li>
+</ul>
+<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><blockquote>
+<p>工厂方法模式： 定义创建对象的接口，让子类决定实例化哪一个类，工厂方法使得一个类的实例化延迟到其子类。</p>
+</blockquote>
+<p>首先先看一下类图：<br><img src="http://o835bn5qj.bkt.clouddn.com/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95.png" alt="工厂方法"></p>
+<p>通过类图可以很清楚的看到，有一个product对象需要被创建，创建对象的方法来自于继承子类重写Creator，也就是说需要知道子类的具体类型才能够进行创建。</p>
+<p>在<a href="http://item.jd.com/11402853.html" target="_blank" rel="external">《Effective Objective-C 2.0：编写高质量iOS与OS X代码的52个有效方法》</a>中也有提及到的虚拟工厂方法，在iOS里面叫做类族，比较典型的类就是我们经常使用的NSArray类，通常我们会认为NSArray是一个类，提供了一些方法，但是在NSArray类里面获得确实其子类的实例，这就是一个典型的工厂模式。</p>
+<h3 id="何时使用"><a href="#何时使用" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>编译时无法准确预期要创建的对象的类。</li>
+<li>类想让其子类决定在运行时创建什么。</li>
+<li>类若有若干辅助类为其子类，而你想将返回哪个子类这一信息局部化。</li>
+</ul>
+<h2 id="抽象工程模式"><a href="#抽象工程模式" class="headerlink" title="抽象工程模式"></a>抽象工程模式</h2><blockquote>
+<p>提供一个创建一系列相关或者相互依赖的接口的对象，而无需指定他们具体的类。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82.png" alt="抽象工厂"></p>
+<p>通过类图我们可以看出，client通过抽象工厂来创建ProductA和ProductB，但是client只要通过AbstractFactory就可以直接获得其子类，而不需要知道子类。这就是为什么是抽象工厂，在工厂方法的基础上隐藏了其实现的具体子类，在工厂方法的基础上又进行了一次抽象。</p>
+<p>说到抽象工厂模式的话，就是要与工厂方法比较一下。</p>
+<table>
+<thead>
+<tr>
+<th>抽象工厂</th>
+<th>工厂方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通过对象组合创建抽象产品</td>
+<td>通过类继承创建抽象产品</td>
+</tr>
+<tr>
+<td>创建多系列产品</td>
+<td>创建一种产品</td>
+</tr>
+<tr>
+<td>必须修改父类的接口才能支持新的产品</td>
+<td>子类化创建者并重载工厂方法以创建新的产品</td>
+</tr>
+</tbody>
+</table>
+<p>假设你现在正在看Demo的话，这里可以简单的说一下。其实抽象工厂就是在工厂方法的基础上将具体的类型也隐藏起来。所以工厂方法里需要知道之类的类型才能够创建对象，而抽象工厂不需要知道具体的子类的类型就可以直接通过父类的方法创建子类对象，所以是在工厂方法的基础上又抽象了一层。</p>
+<h2 id="生成器模式"><a href="#生成器模式" class="headerlink" title="生成器模式"></a>生成器模式</h2><blockquote>
+<p>生成器模式：将一个复杂对象的构建与他的表现分离，使得同样的构建过程可以创建不同的表现。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E7%94%9F%E6%88%90%E5%99%A8.png" alt="生成器模式"></p>
+<p>通过类图我们可以看出来，Director与一个builder对象相识，是通过这个Builder对象来获取对象的。</p>
+<p>根据我的理解，就是单独使用一个类来管理生成对象，client并不需要自己创建对象，只需要告诉生成器我需要什么样的对象，这样生成器就会根据需求创建响应的对象。这样的话就会将构建与表现分离了。<a href="https://github.com/lixuzong/BuilderPattern" target="_blank" rel="external">Demo在这里</a></p>
+<h3 id="何时使用-1"><a href="#何时使用-1" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>需要创建设计各种部件的复杂对象。创建对象的算法应该独立于部件的装配方式。常见例子是构建组合对象。</li>
+<li>构建过程需要以不同的方式（例如，部件或表现的不同组合）构建对象。</li>
+</ul>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><blockquote>
+<p>单例模式： 保证一个类只有一个实例，并提供一个访问他的全局访问点。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E5%8D%95%E4%BE%8B.png" alt="单例模式"></p>
+<p>单例模式是iOS里面比较常用的设计模式。一般我们平时要求不是很严格的时候是这样写的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static Character *character;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[self alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <em>dispatch_once</em> 是为了线程安全，这个也可以用加锁来解决，但一般是交给GCD来实现，会做部分的优化。为什么会说是不严格的单例的，主要是以下两个方面：</p>
+<ul>
+<li>发起调用的对象不能以其他分配方式实例化单例对象。否则，有可能创建单例的多个实例。</li>
+<li>对单例对象实例化的限制应该与引用计数内存模型共存。</li>
+</ul>
+<p>因为ARC目前已经完全取代了MRC所以第二点也就没有必要考虑了，但是仍然需要考虑创建对象的唯一性。也看到有一种方式直接在其他创建对象的方法中强制抛出异常，个人认为是不可取的。一言不合就贴代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static Character *character;</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareCharacter &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        character = [[super allocWithZone:NULL] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return character;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self shareCharacter];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)copy &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里如要是对内存做了限制，首先说一下生成对象的两种方式 <em>[Character shareCharacter]</em> 和 <em>[[Character alloc] init]</em> 需要让两种方法都返回的是同一块内存地址，因为objective-c采用的是两段式的初始化方法，所有只要控制 <em>+ (instancetype)allocWithZone:(struct _NSZone </em>)zone* 返回同样的内存地址就可以了。</p>
+<blockquote>
+<p>这里碰到了一个疑惑就是在网上看到 <em>- (instancetype)copy {return self;}</em> 的另一个版本是 <em>- (instancetype)copy {return character;}</em> 就有点困惑self的指代问题，通过 <em>[self shareCharacter]</em> 可以看出self指代的是当前的类，怎么在返回的时候是一个对象那？后来查了下资料并结合ios runtime的特性，原来self是在运行的时候动态决定其指代的，可以是当前类，也可以是当前的对象。那么这里的理解就是在类方法里面就是当前类，在实例方法里面就是当前对象。</p>
+</blockquote>
+<h1 id="接口适配"><a href="#接口适配" class="headerlink" title="接口适配"></a>接口适配</h1><ul>
+<li>适配器</li>
+<li>桥接</li>
+<li>外观</li>
+</ul>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><blockquote>
+<p>适配器模式：将一个类的接口转换成客户希望的另一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的类可以一起工作</p>
+</blockquote>
+<p>适配器模式在ios里面的实现分为两种，分别是类适配器和对象适配器。假设我们有A类，B类，把A类当成客户，但是A类不能直接调用B类的接口，所以需要一个适配器C类。</p>
+<ul>
+<li>类适配器：将适配器C类继承于B类，对A暴露相关功能的接口。</li>
+</ul>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8.png" alt="类适配器"></p>
+<ul>
+<li>对象适配器：适配器C类拥有B类的实例，对A暴露相关功能的接口。</li>
+</ul>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8.png" alt="对象适配器"></p>
+<blockquote>
+<p>在使用的过程中不使用适配器模式也能实现功能，A类直接拥有B类的对象，将参数传给B类也是能够实现功能的，但是就形成了强耦合关系，使用适配器模式主要是为了解耦合。在实际应用中我发现已经不自觉地使用了该设计模式，也算是比较常用的设计模式，只是这里抽象出来了而已。</p>
+</blockquote>
+<h3 id="delegate是对象适配器"><a href="#delegate是对象适配器" class="headerlink" title="delegate是对象适配器"></a>delegate是对象适配器</h3><p>如果用delegate来实现适配器模式的话，那么从分类上来说应该是对象适配器，Demo这里就没有写，一般我们使用delegate的时候很大部分情况是适配器模式。</p>
+<h3 id="Block实现对象适配器"><a href="#Block实现对象适配器" class="headerlink" title="Block实现对象适配器"></a>Block实现对象适配器</h3><p>使用delegate的方法都是可以用block来改写了，那么这里就不多说了。</p>
+<h3 id="何时使用-2"><a href="#何时使用-2" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>已有类的接口与需求不匹配。</li>
+<li>想要一个可复用的类，该类能够同可能带有不兼容接口的其他类协作。</li>
+<li>需要适配一个类的几个不同子类，可是让每一个子类去子类化一个类适配器又不实现。那么可以使用对象适配器（也叫委托）来适配其父类的接口。</li>
+</ul>
+<h2 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h2><blockquote>
+<p>将抽象部分与他的实现部分分离，使他们可以独立的变化。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F.png" alt="桥接模式"></p>
+<p>桥接模式简单的说就是将抽象部分与实现部分分离，但是根据不同的需求有很多不同的是实现方式，使用起来比较灵活。<a href="https://github.com/lixuzong/BridgePattern" target="_blank" rel="external">Demo地址在这</a>。与书上的代码稍微有些差异，因为通过抽象父类来调用具体子类的方式上有疑问，这里是给父类添加了一个初始化方法，在这个方法里面直接返回子类的对象。（有点像工厂模式）。</p>
+<h3 id="何时使用-3"><a href="#何时使用-3" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>不想在抽象与其实现之间形成固定的绑定关系（这样就能在运行时切换实现）。</li>
+<li>抽象及其实现都应通过子类化独立进行扩展。</li>
+<li>对抽象的实现进行修改不应该影响客户端代码。</li>
+<li>如果每个实现需要额外的子类以细化抽象，则说明有必要把他们分成两个部分。</li>
+<li>想要带有不同抽象接口的多个对象之间共享一个实现。</li>
+</ul>
+<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><blockquote>
+<p>为系统中的一组接口提供一个统一的接口。外观定义一个高层接口，让子系统更容易使用。</p>
+</blockquote>
+<p>简单的说就是将一组功能抽象出来，只对外暴露一个接口。高度的抽象。</p>
+<h3 id="何时使用-4"><a href="#何时使用-4" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>子系统正在逐渐变得复杂。应用模式过程中演化出许多类。可以使用外观为这些子系统提供给一个较简单的接口。</li>
+<li>可以使用外观对子系统分层。每个子系统级别有一个外观作为入口点。让它们通过其外观进行通信，可以简化他们的依赖关系。</li>
+</ul>
+<h1 id="对象去耦"><a href="#对象去耦" class="headerlink" title="对象去耦"></a>对象去耦</h1><ul>
+<li>中介者</li>
+<li>观察者</li>
+</ul>
+<h2 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h2><blockquote>
+<p>中介者模式： 用一个对象来封装一系列对象的交互方式。中介者使得个对象不需要显示的相互引用，从而使得耦合松散，而且可以独立地改变他们之间的交互。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="中介者模式"></p>
+<p>简单的说就是单独使用一个对象C来管理A对象和B对象之间的交互或者说将A和B中较为复杂的逻辑抽象出来。减少A和B之间的耦合，便于A和B对象的重用。</p>
+<h3 id="何时使用中介者模式"><a href="#何时使用中介者模式" class="headerlink" title="何时使用中介者模式"></a>何时使用中介者模式</h3><ul>
+<li>对象之间的交互虽然定义明确但是非常复杂，导致一组对象项目依赖并且难以理解。</li>
+<li>因为对象引用了许多其他对象并与其通信，导致对象难以复用。</li>
+<li>想要定制一个分布在多个类中的逻辑或行为，又不想生成太多的子类。</li>
+</ul>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><blockquote>
+<p>定义对象间的一种一对多的依赖关系，当一个对象的状态发生变化时，所有依赖于它的对象都得到通知并自动更新。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="观察者模式"></p>
+<p>观察者模式在iOS里面的使用频率比较多，框架也已经帮我们实现了方便使用的方式。首先是NSNotificationCenter，再者还有KVO，所以基本已经可以满足我们的需求。目的就是解除观察者和被观察者之间的关系。</p>
+<h1 id="抽象集合"><a href="#抽象集合" class="headerlink" title="抽象集合"></a>抽象集合</h1><ul>
+<li>组合</li>
+<li>迭代器</li>
+</ul>
+<h2 id="组合模式（Composite）"><a href="#组合模式（Composite）" class="headerlink" title="组合模式（Composite）"></a>组合模式（Composite）</h2><blockquote>
+<p>将对象组合成树形结构以表示“部分-整体”的层次结构。组合使得用户对单个对象和组合对象的使用具有一致性。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84.png" alt="树形结构"></p>
+<p>我们可以看到如上图所示的一个树形就够就是组合模式，在这个树形结构当中，线段既包含节点，也包换线段，但是client使用的时候并不关心Stroke包含什么，只是想要统一的处理。所以组合模式可以对外操作保持一致性。</p>
+<p>在CocoaTouch中一个非常典型的例子就是UIView。UIView可以嵌套UIView，Client只需要对父View做响应的处理，父View就可以递归的调用子View，像渲染视图的命令，父View接收到只之后就会逐级向下传递。</p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><blockquote>
+<p>提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示</p>
+</blockquote>
+<p>苹果公司用自己的命名规则“枚举器/枚举”改写了迭代器模式，用于相关基础类的方法。基础框架中的NSEnumerator类实现了迭代器模式。NSArray，NSSet，NSDictionary这样的集合类，定义了返回与集合的类型想响应的NSEnumerator子类实例的方法。用我这种比较通俗的说法就是，提供了一种遍历集合类的方法。也就是迭代器模式。</p>
+<blockquote>
+<p>基本上有两种迭代器：外部迭代器和内部迭代器。外部迭代器让client直接操作迭代过程，所以client需要知道外部迭代器才能使用。另一种情况是，集合对象（被迭代的目标对象）在其内部维护并操作了一个外部迭代器。提供内部迭代器的典型的集合对象为client定义一个接口，或者从底层集合一次访问一个元素，或者向每个元素发送消息。比如NSArray 的  <em>- （void）makeObjectsPerformSelector:(SEL)aSelector</em> 就是内部迭代器。就是不需要知道迭代器，在内部都遍历并实现操作。</p>
+</blockquote>
+<h3 id="何时使用-5"><a href="#何时使用-5" class="headerlink" title="何时使用"></a>何时使用</h3><ul>
+<li>需要访问组合对象的内容，而又不暴露内部表示。</li>
+<li>需要通过多种方式暴露组合对象。</li>
+<li>需要提供一个统一的接口，来遍历各种类型的组合对象。</li>
+</ul>
+<h1 id="行为扩展"><a href="#行为扩展" class="headerlink" title="行为扩展"></a>行为扩展</h1><ul>
+<li>访问者模式</li>
+<li>装饰</li>
+<li>责任链</li>
+</ul>
+<h2 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h2><blockquote>
+<p>表示一个作用于某对象结构中的各元素的操作。它让我们可以在不改变各元素类的前提下定义作用于这些元素的新操作。</p>
+</blockquote>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="访问者模式"></p>
+<p>解释一下访问者模式，就是将自己不熟悉的业务承包出去。比如说我们的家是一个类，对于里面的下水道我们就有各种使用的方法，但是关于修理下水道我们要承包出去，找专业的人来对他进行操作，而这个维修的操做不能影响我们现在的使用。所以这就是访问者模式，承包商就是访问者。这样比较容易理解。<br>从类图上可以看出来，Element调用 <em>acceptVister:</em> 方法将自身传递给vister，vister接收之后就可以对其进行操作。从而可以获得行为的扩展。</p>
+<h3 id="何时使用访问者模式"><a href="#何时使用访问者模式" class="headerlink" title="何时使用访问者模式"></a>何时使用访问者模式</h3><ul>
+<li>一个复杂的对象结构包含很多其他的对象，它们有不同的接口（比如组合体），但是相对这些对象实施一些依赖其具体类型的操作。</li>
+<li>需要对一个组合结构中的对象进行很多不相关的操作，但是不想让这些操作“污染”这些对象的类。可以将相关的操作集中起来，定义在一个访问者类中，并在需要在访问者中定义的操作时使用它。</li>
+<li>定义复杂结构的类很少作修改，但是经常需要向其添加新的操作。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lixuzong.com/2016/08/15/ios设计模式/" data-id="civ7ifz1w0006r8wlacjfsiwl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式-iOS/">设计模式,iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/20/core_animation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          core animation note
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/09/知识点汇总/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS知识点汇总(持续更新...)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/移动开发/">移动开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios-core-animation/">ios core_animation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式-iOS/">设计模式,iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/ReactNative/" style="font-size: 20px;">ReactNative</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/ios-core-animation/" style="font-size: 10px;">ios core_animation</a> <a href="/tags/设计模式-iOS/" style="font-size: 10px;">设计模式,iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/20/core_animation/">core animation note</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/15/ios设计模式/">ios中的设计模式实现</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/09/知识点汇总/">iOS知识点汇总(持续更新...)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/15/react-native实战/">React Native开源项目笔记(1):redux管理数据</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/23/从iOS开发的角度理解HTTP/">以iOS开发的角度了解HTTP协议</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 李旭<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

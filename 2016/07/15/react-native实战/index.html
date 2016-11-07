@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>React Native开源项目笔记(1):redux管理数据 | Lixuzong&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先放上开源项目的地址：React-Native开源项目iShiWuPai这边笔记主要是记录看开源项目iShiWuPai之后的一些知识点。前端的话一般都是使用的MVC框架，这样的话我也是从这三个方面学习，这个项目中的数据的话用的是Redux框架，View的话就是使用ReactNative框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native开源项目笔记(1):redux管理数据">
+<meta property="og:url" content="http://lixuzong.com/2016/07/15/react-native实战/index.html">
+<meta property="og:site_name" content="Lixuzong's Blog">
+<meta property="og:description" content="首先放上开源项目的地址：React-Native开源项目iShiWuPai这边笔记主要是记录看开源项目iShiWuPai之后的一些知识点。前端的话一般都是使用的MVC框架，这样的话我也是从这三个方面学习，这个项目中的数据的话用的是Redux框架，View的话就是使用ReactNative框架。">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg">
+<meta property="og:image" content="http://user-image.logdown.io/user/8925/blog/8821/post/332288/tPbal8BSc6vs06ti0FVQ_Redux-multi-reducer.jpg">
+<meta property="og:image" content="http://user-image.logdown.io/user/8925/blog/8821/post/332288/NqajldzQTpWbXR3YjEyN_Redux-middleware.jpg">
+<meta property="og:updated_time" content="2016-09-11T02:37:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native开源项目笔记(1):redux管理数据">
+<meta name="twitter:description" content="首先放上开源项目的地址：React-Native开源项目iShiWuPai这边笔记主要是记录看开源项目iShiWuPai之后的一些知识点。前端的话一般都是使用的MVC框架，这样的话我也是从这三个方面学习，这个项目中的数据的话用的是Redux框架，View的话就是使用ReactNative框架。">
+<meta name="twitter:image" content="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Lixuzong&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Lixuzong&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">do myself!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lixuzong.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-react-native实战" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/15/react-native实战/" class="article-date">
+  <time datetime="2016-07-15T04:34:34.000Z" itemprop="datePublished">2016-07-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/移动开发/">移动开发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React Native开源项目笔记(1):redux管理数据
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先放上开源项目的地址：<a href="https://github.com/ljunb/react-native-iShiWuPai" target="_blank" rel="external">React-Native开源项目iShiWuPai</a><br>这边笔记主要是记录看开源项目iShiWuPai之后的一些知识点。前端的话一般都是使用的MVC框架，这样的话我也是从这三个方面学习，这个项目中的数据的话用的是Redux框架，View的话就是使用ReactNative框架。</p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/shouhui2.jpg" alt="手绘"></p>
+<a id="more"></a>
+<h2 id="index-ios-js文件"><a href="#index-ios-js文件" class="headerlink" title="index.ios.js文件"></a>index.ios.js文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppRegistry &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line"><span class="keyword">import</span> Root <span class="keyword">from</span> <span class="string">'./app/root'</span>;</span><br><span class="line"></span><br><span class="line">AppRegistry.registerComponent(<span class="string">'iShiWuPai'</span>, () =&gt; Root);</span><br></pre></td></tr></table></figure>
+<p><em>Root</em> 文件是主入口，<em>AppRegister.registerComponent（）</em> 方法是用来注册ReactNative，第一个字符串要和iOS项目中注册的一致，第二个传入的是根类。</p>
+<blockquote>
+<p>这里的 <em>()=&gt;Root</em> 的写法有点像iOS的Block块，姑且当做是JS里面匿名函数的写法吧。</p>
+</blockquote>
+<h2 id="root-js文件"><a href="#root-js文件" class="headerlink" title="root.js文件"></a>root.js文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="comment">//这个是结构化好的state数据</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store/store'</span>;</span><br><span class="line"><span class="comment">//这个是项目的主要逻辑</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./containers/app'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Root</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;Provider store = &#123;store&#125; &gt;</span><br><span class="line">                 &lt;App /&gt;</span><br><span class="line">            &lt;/Provider&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用到了<em>react-redux</em>文件，<em>redux</em> 主要是用来处理数据，管理state而存在的，将工程中使用的所有state结构化成树结构，这样的话就可以跟踪state的变化（大概就先了解这么多，以后再具体研究）。使用方法大概就是引入 <em>Provider</em> 类，并且将准备好的 <em>store</em>（就是已经结构化好的数据）传入。刚开始学习的时候不太懂怎么使用其他文件中的类的，这里看到 <em>export</em> 关键字就联系到了iOS中的 <em>public</em> 关键字，这样的话只要导入这个文件之后就可以直接使用 <em>export</em> 修饰的类了。</p>
+<h2 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h2><p>这里参考了文章：<a href="https://rhadow.github.io/2015/07/30/beginner-redux/" target="_blank" rel="external">redux入门</a></p>
+<h3 id="store-js文件"><a href="#store-js文件" class="headerlink" title="store.js文件"></a>store.js文件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">'redux-thunk'</span>;</span><br><span class="line"><span class="keyword">import</span> rootReducer <span class="keyword">from</span> <span class="string">'../reducers/rootRudcer'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> createStoreWithMiddleware = applyMiddleware(thunk)(createStore);</span><br><span class="line"><span class="keyword">let</span> store = createStoreWithMiddleware(rootReducer);</span><br><span class="line"><span class="comment">// let state = store.getState();</span></span><br><span class="line"><span class="comment">// alert(state.Search.searchText)</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+<p>这里 <em>redux</em> 和 <em>redux-thunk</em> 的使用方法就是像代码里写的一样。<em>reducer</em> 是用来管理 <em>state</em> 和 <em>action</em> 类，这里每个页面的数据就是使用一个 <em>reducer</em> ，<em>rootReducer</em> 是各个 <em>reducer</em> 的集合。 <em>action</em> 是用来更新 <em>state</em> 的，因为将所有的state都集中在一起管理，那么用 <em>action</em> 来更新 <em>state</em> 就不会产生混乱了。就是可以理解成 <em>reducer</em> 提供了一个容器，在这个容器里面用 <em>action</em> 来更新 <em>state</em> 。<em>let store = createStoreWithMiddleware(rootReducer);</em> 这句换就是将 <em>reducer</em> 和 <em>store</em> 发生关联，这样当 <em>store</em> 里面的数据发生改变的时候就会触发 <em>Action</em> 事件。</p>
+<blockquote>
+<p>middleware是用来实现 <em>dispatch</em> 方法的异步或者同步执行等不同的状态，这里使用的是异步的 <em>dispatch</em> 方法。</p>
+</blockquote>
+<p><img src="http://user-image.logdown.io/user/8925/blog/8821/post/332288/tPbal8BSc6vs06ti0FVQ_Redux-multi-reducer.jpg" alt="更新state流程"></p>
+<p><img src="http://user-image.logdown.io/user/8925/blog/8821/post/332288/NqajldzQTpWbXR3YjEyN_Redux-middleware.jpg" alt="middleware作用"></p>
+<h3 id="strollingReucer-js"><a href="#strollingReucer-js" class="headerlink" title="strollingReucer.js"></a>strollingReucer.js</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义所有types的地方</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> types <span class="keyword">from</span> <span class="string">'../actions/actionTypes'</span>;</span><br><span class="line"><span class="keyword">const</span> initialState = &#123;</span><br><span class="line">    bannerList: [],</span><br><span class="line">    feedList: [],</span><br><span class="line">    isLoading: <span class="literal">true</span>,</span><br><span class="line">    isLoadMore: <span class="literal">false</span>,</span><br><span class="line">    isRefreshing: <span class="literal">false</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> strollingReducer = (state = initialState, action) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> types.FETCH_BANNER_LIST:</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                ...state,</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">case</span> types.RECEIVE_BANNER_LIST:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123;&#125;, state, &#123;</span><br><span class="line">                bannerList: action.bannerList,</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">case</span> types.FETCH_FEED_LIST:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123;&#125;, state, &#123;</span><br><span class="line">                isLoadMore: action.isLoadMore,</span><br><span class="line">                isRefreshing: action.isRefreshing,</span><br><span class="line">                isLoading: action.isLoading,</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">case</span> types.RECEIVE_FEED_LIST:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123;&#125;, state, &#123;</span><br><span class="line">                feedList: state.isLoadMore ? state.feedList.concat(action.feedList) : action.feedList,</span><br><span class="line">                isRefreshing: <span class="literal">false</span>,</span><br><span class="line">                isLoading: <span class="literal">false</span>,</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> strollingReducer;</span><br></pre></td></tr></table></figure>
+<p><em>reducer</em> 的任务就是将传入的旧 <em>state</em> 和 <em>action</em> 更新并返回新的 <em>state</em> 。示例代码中的 <em>strollingReducer</em> 就是 <em>rootReducer</em> 中的一个。</p>
+<h3 id="strollingActions-js文件"><a href="#strollingActions-js文件" class="headerlink" title="strollingActions.js文件"></a>strollingActions.js文件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> types <span class="keyword">from</span> <span class="string">'./actionTypes'</span>;</span><br><span class="line"><span class="keyword">import</span> Util <span class="keyword">from</span> <span class="string">'../common/utils'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> fetchBanners = ()=&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> URL = <span class="string">'http://food.boohee.com/fb/v1/home/banners'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dispatch =&gt; &#123;</span><br><span class="line">        <span class="comment">// 请求轮播数据</span></span><br><span class="line">        dispatch(fetchBannerList());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Util.get(URL, (response) =&gt; &#123;</span><br><span class="line">            dispatch(receiveBannerList(response.banners))</span><br><span class="line">        &#125;, (error) =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Fetch banner list error: '</span> + error);</span><br><span class="line">            dispatch(receiveBannerList([]));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fetchBannerList = ()=&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: types.FETCH_BANNER_LIST,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> receiveBannerList = (bannerList) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: types.RECEIVE_BANNER_LIST,</span><br><span class="line">        bannerList: bannerList,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是对应的的 <em>strolling</em> 类的 <em>action</em> 文件,这里需要更新 <em>state</em> 的情况就是加载网络数据之后更新。之前一直在想 <em>strollingAction</em>  是如何将自身传递给 <em>strollingReducer</em> 的，这里是自己理解的 <em>dispatch</em> 的作用。既然最后要将 <em>reducer</em> 合并成一个，这样的话 <em>dispatch</em> 直接操作的是 <em>state</em> 树结构，所有的 <em>action</em> 也都会返回一个固定的结构:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> receiveBannerList = (bannerList) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        type: types.RECEIVE_BANNER_LIST,</span><br><span class="line">        bannerList: bannerList,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里返回的就是一个 <em>action</em> ，格式基本上就是这样。</p>
+<h3 id="Strolling-js文件"><a href="#Strolling-js文件" class="headerlink" title="Strolling.js文件"></a>Strolling.js文件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">        InteractionManager.runAfterInteractions(() =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123;dispatch&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">            dispatch(fetchBanners());</span><br><span class="line">            dispatch(fetchFeeds(page, canLoadMore, isRefreshing, isLoading));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> &#123;Strolling&#125; = <span class="keyword">this</span>.props;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> bannerList = Strolling.bannerList;</span><br><span class="line">        <span class="keyword">let</span> feedList = Strolling.feedList;</span><br><span class="line">        <span class="keyword">let</span> sourceData = &#123;<span class="string">'banner'</span>: [bannerList], <span class="string">'feed'</span>: feedList&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> sectionIDs = [<span class="string">'banner'</span>, <span class="string">'feed'</span>];</span><br><span class="line">        <span class="keyword">let</span> rowIDs = [[<span class="number">0</span>]];</span><br><span class="line">				...</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <em>Strolling</em> 中使用数据的时候有两个个地方没有看明白， <em>const {dispatch} = this.props</em> 和 <em>const {Strolling} = this.props</em> 。通过查 <em>redux</em> 文档，原来这个地方能从props里直接取到 <em>dispatch</em> 和 <em>Strolling</em> 是因为框架调用了React Redux connect()注入props。这样的话就做到了数据的传输使用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lixuzong.com/2016/07/15/react-native实战/" data-id="civ7ifz200008r8wlm50s1hx0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactNative/">ReactNative</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/09/知识点汇总/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS知识点汇总(持续更新...)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/23/从iOS开发的角度理解HTTP/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">以iOS开发的角度了解HTTP协议</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/移动开发/">移动开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios-core-animation/">ios core_animation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式-iOS/">设计模式,iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/ReactNative/" style="font-size: 20px;">ReactNative</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/ios-core-animation/" style="font-size: 10px;">ios core_animation</a> <a href="/tags/设计模式-iOS/" style="font-size: 10px;">设计模式,iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/20/core_animation/">core animation note</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/15/ios设计模式/">ios中的设计模式实现</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/09/知识点汇总/">iOS知识点汇总(持续更新...)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/15/react-native实战/">React Native开源项目笔记(1):redux管理数据</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/23/从iOS开发的角度理解HTTP/">以iOS开发的角度了解HTTP协议</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 李旭<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
