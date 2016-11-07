@@ -1,11 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+<!doctype html>
+
+
+
   
-  <title>core animation note | Lixuzong&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="LU1HdYri8T" />
+<meta name="google-site-verification" content="4UrTVwmYnfYxfVmx3uzXQnKLEfCc7tq6wWCYjH2lJug" />
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ios core_animation," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
 <meta property="og:type" content="article">
 <meta property="og:title" content="core animation note">
 <meta property="og:url" content="http://lixuzong.com/2016/10/20/core_animation/index.html">
@@ -15,83 +100,269 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="core animation note">
 <meta name="twitter:description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
-  
-    <link rel="alternate" href="/atom.xml" title="Lixuzong&#39;s Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
 
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> core animation note | Lixuzong's Blog </title>
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Lixuzong&#39;s Blog</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">do myself!</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lixuzong.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-core_animation" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/20/core_animation/" class="article-date">
-  <time datetime="2016-10-20T02:32:48.000Z" itemprop="datePublished">2016-10-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
-  </div>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      core animation note
-    </h1>
   
 
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=500131055";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Lixuzong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">do myself!</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                core animation note
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-20T10:32:48+08:00" content="2016-10-20">
+              2016-10-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/20/core_animation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/20/core_animation/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/20/core_animation/" class="leancloud_visitors" data-flag-title="core animation note">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <p>我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALayer层叠加的结果，UIView就管理着这个相互叠加的过程。再者，UIView还管理着手势的响应。如果只从视图的角度来看的话，UIView只是对CALayer的一层封装。<br><a id="more"></a></p>
 <p>首先先放上本书的<a href="https://www.gitbook.com/book/zsisme/ios-/details" target="_blank" rel="external">链接</a>，看的过程中有些翻译不是非常的准确，所以是结合着原版的一起看的。</p>
@@ -211,134 +482,569 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ViewController() </span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSArray *imagePaths;</span><br><span class="line">@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    //set up data</span><br><span class="line">    self.imagePaths = [[NSBundle mainBundle] pathsForResourcesOfType:@&quot;png&quot; ￼inDirectory:@&quot;Vacation Photos&quot;];</span><br><span class="line">    //register cell class</span><br><span class="line">    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@&quot;Cell&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section</span><br><span class="line">&#123;</span><br><span class="line">    return [self.imagePaths count];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UIImage *)loadImageAtIndex:(NSUInteger)index</span><br><span class="line">&#123;</span><br><span class="line">    //set up cache</span><br><span class="line">    static NSCache *cache = nil;</span><br><span class="line">    if (!cache) &#123;</span><br><span class="line">        cache = [[NSCache alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    //if already cached, return immediately</span><br><span class="line">    UIImage *image = [cache objectForKey:@(index)];</span><br><span class="line">    if (image) &#123;</span><br><span class="line">        return [image isKindOfClass:[NSNull class]]? nil: image;</span><br><span class="line">    &#125;</span><br><span class="line">    //set placeholder to avoid reloading image multiple times</span><br><span class="line">    [cache setObject:[NSNull null] forKey:@(index)];</span><br><span class="line">    //switch to background thread</span><br><span class="line">    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^&#123;</span><br><span class="line">        //load image</span><br><span class="line">        NSString *imagePath = self.imagePaths[index];</span><br><span class="line">        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];</span><br><span class="line">        //redraw image using device context</span><br><span class="line">        UIGraphicsBeginImageContextWithOptions(image.size, YES, 0);</span><br><span class="line">        [image drawAtPoint:CGPointZero];</span><br><span class="line">        image = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">        UIGraphicsEndImageContext();</span><br><span class="line">        //set image for correct image view</span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123; //cache the image</span><br><span class="line">            [cache setObject:image forKey:@(index)];</span><br><span class="line">            //display the image</span><br><span class="line">            NSIndexPath *indexPath = [NSIndexPath indexPathForItem: index inSection:0]; UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];</span><br><span class="line">            UIImageView *imageView = [cell.contentView.subviews lastObject];</span><br><span class="line">            imageView.image = image;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    //not loaded yet</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    //dequeue cell</span><br><span class="line">    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@&quot;Cell&quot; forIndexPath:indexPath];</span><br><span class="line">    //add image view</span><br><span class="line">    UIImageView *imageView = [cell.contentView.subviews lastObject];</span><br><span class="line">    if (!imageView) &#123;</span><br><span class="line">        imageView = [[UIImageView alloc] initWithFrame:cell.contentView.bounds];</span><br><span class="line">        imageView.contentMode = UIViewContentModeScaleAspectFit;</span><br><span class="line">        [cell.contentView addSubview:imageView];</span><br><span class="line">    &#125;</span><br><span class="line">    //set or load image for this index</span><br><span class="line">    imageView.image = [self loadImageAtIndex:indexPath.item];</span><br><span class="line">    //preload image for previous and next index</span><br><span class="line">    if (indexPath.item &lt; [self.imagePaths count] - 1) &#123;</span><br><span class="line">        [self loadImageAtIndex:indexPath.item + 1]; &#125;</span><br><span class="line">    if (indexPath.item &gt; 0) &#123;</span><br><span class="line">        [self loadImageAtIndex:indexPath.item - 1]; &#125;</span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://lixuzong.com/2016/10/20/core_animation/" data-id="civ7he592000827wl9umqjp5r" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios-core-animation/">ios core_animation</a></li></ul>
 
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wxpay001.jpeg" alt="李旭 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay001.jpeg" alt="李旭 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ios-core-animation/" rel="tag">#ios core_animation</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/15/ios设计模式/" rel="next" title="ios中的设计模式实现">
+                <i class="fa fa-chevron-left"></i> ios中的设计模式实现
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
     </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2016/08/15/ios设计模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">ios中的设计模式实现</div>
-    </a>
-  
-</nav>
+  </article>
 
-  
-</article>
 
-</section>
+
+    <div class="post-spread">
+      
         
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/移动开发/">移动开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul>
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
     </div>
   </div>
 
 
-  
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios-core-animation/">ios core_animation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式-iOS/">设计模式,iOS</a></li></ul>
-    </div>
+      <div class="ds-thread" data-thread-key="2016/10/20/core_animation/"
+           data-title="core animation note" data-url="http://lixuzong.com/2016/10/20/core_animation/">
+      </div>
+    
   </div>
 
 
+        </div>
+        
+          
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/ReactNative/" style="font-size: 20px;">ReactNative</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/ios-core-animation/" style="font-size: 10px;">ios core_animation</a> <a href="/tags/设计模式-iOS/" style="font-size: 10px;">设计模式,iOS</a>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar_boy.JPG"
+               alt="李旭" />
+          <p class="site-author-name" itemprop="name">李旭</p>
+          <p class="site-description motion-element" itemprop="description">技术博客，记录技术成长历程</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Layer的知识点"><span class="nav-number">1.</span> <span class="nav-text">关于Layer的知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图层树"><span class="nav-number">1.1.</span> <span class="nav-text">图层树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer的contents"><span class="nav-number">1.2.</span> <span class="nav-text">Layer的contents</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关属性"><span class="nav-number">1.2.1.</span> <span class="nav-text">相关属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-drawing"><span class="nav-number">1.2.2.</span> <span class="nav-text">custom drawing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图层几何"><span class="nav-number">1.3.</span> <span class="nav-text">图层几何</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer视觉效果"><span class="nav-number">1.4.</span> <span class="nav-text">Layer视觉效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGAffineTransform"><span class="nav-number">1.5.</span> <span class="nav-text">CGAffineTransform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGTransform3D"><span class="nav-number">1.6.</span> <span class="nav-text">CGTransform3D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#专用图层"><span class="nav-number">1.7.</span> <span class="nav-text">专用图层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAShapeLayer"><span class="nav-number">1.7.1.</span> <span class="nav-text">CAShapeLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATextLayer"><span class="nav-number">1.7.2.</span> <span class="nav-text">CATextLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATransformLayer"><span class="nav-number">1.7.3.</span> <span class="nav-text">CATransformLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAGradientLayer"><span class="nav-number">1.7.4.</span> <span class="nav-text">CAGradientLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAReplicatorLayer"><span class="nav-number">1.7.5.</span> <span class="nav-text">CAReplicatorLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAScrollLayer"><span class="nav-number">1.7.6.</span> <span class="nav-text">CAScrollLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATiledLayer"><span class="nav-number">1.7.7.</span> <span class="nav-text">CATiledLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAEmitterLayer"><span class="nav-number">1.7.8.</span> <span class="nav-text">CAEmitterLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAEAGLLayer"><span class="nav-number">1.7.9.</span> <span class="nav-text">CAEAGLLayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVPlayerLayer"><span class="nav-number">1.7.10.</span> <span class="nav-text">AVPlayerLayer</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动画"><span class="nav-number">2.</span> <span class="nav-text">动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#implicit-animation"><span class="nav-number">2.1.</span> <span class="nav-text">implicit animation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-aniamtion"><span class="nav-number">2.2.</span> <span class="nav-text">explicit aniamtion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAPropertyAniamtion（属性动画）"><span class="nav-number">2.2.1.</span> <span class="nav-text">CAPropertyAniamtion（属性动画）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过渡动画（CATransition）"><span class="nav-number">2.2.2.</span> <span class="nav-text">过渡动画（CATransition）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#图层树的动画"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">图层树的动画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义动画"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">自定义动画</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动画的时间、缓冲"><span class="nav-number">3.</span> <span class="nav-text">动画的时间、缓冲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#model-layer-amp-presentation-layer"><span class="nav-number">3.1.</span> <span class="nav-text">model layer & presentation layer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能调优"><span class="nav-number">4.</span> <span class="nav-text">性能调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#性能陷阱"><span class="nav-number">4.1.</span> <span class="nav-text">性能陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加载图片消耗内存和占用CPU的原因"><span class="nav-number">4.2.</span> <span class="nav-text">加载图片消耗内存和占用CPU的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片加载的性能优化（TableView优化）"><span class="nav-number">4.3.</span> <span class="nav-text">图片加载的性能优化（TableView优化）</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
     </div>
-  </div>
+  </aside>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/10/20/core_animation/">core animation note</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/15/ios设计模式/">ios中的设计模式实现</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/09/知识点汇总/">iOS知识点汇总(持续更新...)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/15/react-native实战/">React Native开源项目笔记(1):redux管理数据</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/23/从iOS开发的角度理解HTTP/">以iOS开发的角度了解HTTP协议</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2016 李旭<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李旭</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
     </div>
   </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+
+
   
-</nav>
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
     
+  
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lixuzong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js"></script>
 
-  </div>
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("LmcLpoyKBiSKqLYbQwaMjP7G-gzGzoHsz", "lINfFog7AJpQ8RzJ5RrK285M");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
 </body>
 </html>
