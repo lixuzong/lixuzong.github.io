@@ -11,10 +11,12 @@
 <meta property="og:url" content="http://lixuzong.com/2016/10/20/core_animation知识点/index.html">
 <meta property="og:site_name" content="Lixuzong's Blog">
 <meta property="og:description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
-<meta property="og:updated_time" content="2016-11-04T07:01:32.000Z">
+<meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/core_animation.png">
+<meta property="og:updated_time" content="2016-11-09T03:32:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="core animation note">
 <meta name="twitter:description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
+<meta name="twitter:image" content="http://o835bn5qj.bkt.clouddn.com/core_animation.png">
   
     <link rel="alternate" href="/atom.xml" title="Lixuzong&#39;s Blog" type="application/atom+xml">
   
@@ -56,9 +58,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lixuzong.com"></form>
@@ -93,7 +95,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALayer层叠加的结果，UIView就管理着这个相互叠加的过程。再者，UIView还管理着手势的响应。如果只从视图的角度来看的话，UIView只是对CALayer的一层封装。<br><a id="more"></a></p>
+        <p>我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALayer层叠加的结果，UIView就管理着这个相互叠加的过程。再者，UIView还管理着手势的响应。如果只从视图的角度来看的话，UIView只是对CALayer的一层封装。    </p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/core_animation.png" alt="core_animation_book"></p>
+<a id="more"></a>
 <p>首先先放上本书的<a href="https://www.gitbook.com/book/zsisme/ios-/details" target="_blank" rel="external">链接</a>，看的过程中有些翻译不是非常的准确，所以是结合着原版的一起看的。</p>
 <h1 id="关于Layer的知识点"><a href="#关于Layer的知识点" class="headerlink" title="关于Layer的知识点"></a>关于Layer的知识点</h1><h2 id="图层树"><a href="#图层树" class="headerlink" title="图层树"></a>图层树</h2><p>关于图层树，我们看到的图层与UIView的层级是对应的，而UIView的层级与CALayer是对应的，其中CALayer tree又分为呈现树(presentation layer tree)和模型树(model layer tree)，因为layer默认是带有隐式动画的，但是我们直接改变layer属性的时候是立即生效的，也就是说layer的属性改变是立即执行的，但是界面上还是依然反应有一个动画的过程，所以这个时候就分成了两个tree，一个是界面上所呈现的层级（presentation layer tree），一个是我们修改的层级(model layer tree)。</p>
 <h2 id="Layer的contents"><a href="#Layer的contents" class="headerlink" title="Layer的contents"></a>Layer的contents</h2><p>contents是一个id类型的对象，但是接收的类型应该是Core Foundation框架的类型，这里是因为在MAC OS系统上CGImage和NSImage类型值都是可以起作用的。在iOS上的话就是用bridge将CGImage转成Core Foundation的id类型就可以了。下面具体看一下contens的属性。</p>
@@ -212,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lixuzong.com/2016/10/20/core_animation知识点/" data-id="civ7io7mn0000yawl8ahvpatf" class="article-share-link">Share</a>
+      <a data-url="http://lixuzong.com/2016/10/20/core_animation知识点/" data-id="civadedu20002oewljbzzuqjx" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios-core-animation/">ios core_animation</a></li></ul>
@@ -225,7 +229,7 @@
   
   
     <a href="/2016/08/15/ios设计模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">ios中的设计模式实现</div>
     </a>
   
@@ -240,7 +244,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/移动开发/">移动开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul>
     </div>
@@ -250,7 +254,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios-core-animation/">ios core_animation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式-iOS/">设计模式,iOS</a></li></ul>
     </div>
@@ -260,7 +264,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/ReactNative/" style="font-size: 20px;">ReactNative</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/ios-core-animation/" style="font-size: 10px;">ios core_animation</a> <a href="/tags/设计模式-iOS/" style="font-size: 10px;">设计模式,iOS</a>
     </div>
@@ -279,7 +283,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -316,7 +320,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 李旭<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
