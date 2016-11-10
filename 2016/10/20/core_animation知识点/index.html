@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="Lixuzong's Blog">
 <meta property="og:description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
 <meta property="og:image" content="http://o835bn5qj.bkt.clouddn.com/core_animation.png">
-<meta property="og:updated_time" content="2016-11-10T11:05:21.000Z">
+<meta property="og:updated_time" content="2016-11-10T11:07:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="core animation note">
 <meta name="twitter:description" content="我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALaye">
@@ -474,7 +474,6 @@
 <blockquote>
 <p> 离屏渲染影响性能的原因：「直接将图层合成到帧的缓冲区中(在屏幕上)比先创建屏幕外缓冲区，然后渲染到纹理中，最后将结果渲染到帧的缓冲区中要廉价很多。因为这其中涉及两次昂贵的环境转换(转换环境到屏幕外缓冲区，然后转换环境到帧缓冲区)。」触发离屏渲染后这种转换发生在每一帧，在界面的滚动过程中如果有大量的离屏渲染发生时会严重影响帧率。</p>
 </blockquote>
-<p>文／seedante（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/ca51c9d3575b" target="_blank" rel="external">http://www.jianshu.com/p/ca51c9d3575b</a><br>著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</p>
 <ul>
 <li>缓存图片也是可以实现优化，<em>[UIImage imageNamed:]</em>方法会直接缓存之后的图片，但是我们并不能手动控制，而且也不知道什么时候图片是被缓存的，那么就要使用<em>NSCache</em>来实现缓存，并且缓存的是解压之后的图片，使用UIKit的话就是要在<em>CGContext</em>里面实现。这里是处理好的例子：</li>
 </ul>
