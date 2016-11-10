@@ -4,12 +4,11 @@
   
     
     <entry>
-      <title></title>
-      <url>http://lixuzong.com/2016/10/20/core_animation/</url>
-      <content type="html"><![CDATA[<hr>
-<p>title : core animation note<br>tag :ios<br>category : 读书笔记</p>
-<hr>
-<p>我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALayer层叠加的结果，UIView就管理着这个相互叠加的过程。再者，UIView还管理着手势的响应。如果只从视图的角度来看的话，UIView只是对CALayer的一层封装。<br><a id="more"></a></p>
+      <title><![CDATA[core animation note]]></title>
+      <url>http://lixuzong.com/2016/10/20/core_animation%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+      <content type="html"><![CDATA[<p>我们所在屏幕上看到的都是Core Animation框架提供的，所以这并不是一个只关于动画的框架，他包含了我们在屏幕上所能看到的一切东西。这里首先说一下CALayer和UIView的关系，UIView是CALayer的管理者，CALayer是我们在屏幕上所能看到的UIView说呈现的。用过Photoshop的都知道，图片可以是很多图层的叠加计算的结果，与之类似，我们在屏幕上所看到的也是CALayer层叠加的结果，UIView就管理着这个相互叠加的过程。再者，UIView还管理着手势的响应。如果只从视图的角度来看的话，UIView只是对CALayer的一层封装。    </p>
+<p><img src="http://o835bn5qj.bkt.clouddn.com/core_animation.png" alt="core_animation_book"></p>
+<a id="more"></a>
 <p>首先先放上本书的<a href="https://www.gitbook.com/book/zsisme/ios-/details" target="_blank" rel="external">链接</a>，看的过程中有些翻译不是非常的准确，所以是结合着原版的一起看的。</p>
 <h1 id="关于Layer的知识点"><a href="#关于Layer的知识点" class="headerlink" title="关于Layer的知识点"></a>关于Layer的知识点</h1><h2 id="图层树"><a href="#图层树" class="headerlink" title="图层树"></a>图层树</h2><p>关于图层树，我们看到的图层与UIView的层级是对应的，而UIView的层级与CALayer是对应的，其中CALayer tree又分为呈现树(presentation layer tree)和模型树(model layer tree)，因为layer默认是带有隐式动画的，但是我们直接改变layer属性的时候是立即生效的，也就是说layer的属性改变是立即执行的，但是界面上还是依然反应有一个动画的过程，所以这个时候就分成了两个tree，一个是界面上所呈现的层级（presentation layer tree），一个是我们修改的层级(model layer tree)。</p>
 <h2 id="Layer的contents"><a href="#Layer的contents" class="headerlink" title="Layer的contents"></a>Layer的contents</h2><p>contents是一个id类型的对象，但是接收的类型应该是Core Foundation框架的类型，这里是因为在MAC OS系统上CGImage和NSImage类型值都是可以起作用的。在iOS上的话就是用bridge将CGImage转成Core Foundation的id类型就可以了。下面具体看一下contens的属性。</p>
@@ -117,7 +116,7 @@
 <p>  用于加载的CPU时间相对于解码来说根据图片格式而不同。对于PNG图片来说，加载会比JPEG更长，因为文件可能更大，但是解码会相对较快，而且Xcode会把PNG图片进行解码优化之后引入工程。JPEG图片更小，加载更快，但是解压的步骤要消耗更长的时间，因为JPEG解压算法比基于zip的PNG算法更加复杂。</p>
 <h2 id="图片加载的性能优化（TableView优化）"><a href="#图片加载的性能优化（TableView优化）" class="headerlink" title="图片加载的性能优化（TableView优化）"></a>图片加载的性能优化（TableView优化）</h2><ul>
 <li>在后台线程中加载图片，会有效果，但是并不是性能的瓶颈。</li>
-<li>iOS为了节省内存延迟解压,解压会消耗很长的时间，这里带来的问题就是在使用的时候进行解压，就会造成界面的卡顿<em>[UIimage imageName:]</em>会立即解压图片，并进行缓存，占用内存空间。<em>[UIImage imageWithContentsOfFile:]</em>会延迟图片的解压，使用的时候在进行解压，另外两种方式也会直接解压图片，一种是作为<em>layer</em>的<em>contents</em>属性的时候，还有一种就是作为<em>UIImageView</em>的<em>image</em>属性的时候，但是这两种方法必须在主线程中才有效。第四种方式是不用UIKit框架，直接使用ImageIO框架来实现：</li>
+<li>iOS为了节省内存延迟解压,解压会消耗很长的时间，这里带来的问题就是在使用的时候进行解压，就会造成界面的卡顿<em>[UIImage imageWithContentsOfFile:]</em>会延迟图片的解压，<em>[UIimage imageName:]</em>会立即解压图片，另外两种方式也会直接解压图片，一种是作为<em>layer</em>的<em>contents</em>属性的时候，还有一种就是作为<em>UIImageView</em>的<em>image</em>属性的时候，但是这两种方法必须在主线程中才有效。第四种方式是不用UIKit框架，直接使用ImageIO框架来实现：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSInteger index = indexPath.row;NSURL *imageURL = [NSURL fileURLWithPath:self.imagePaths[index]]; NSDictionary *options = @&#123;(__bridge id)kCGImageSourceShouldCache: @YES&#125;; CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, NULL);CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, 0,(__bridge CFDictionaryRef)options);UIImage *image = [UIImage imageWithCGImage:imageRef]; CGImageRelease(imageRef);CFRelease(source);</span><br></pre></td></tr></table></figure>
 <p>这里还有第五种方式依然使用UIKit框架来实现立即解压图片，以为绘制图片之前会解压图片，那么就直接将图片画到CGContext里面，从而实现立即解压，这有个好处就是不是必须在主线程中实现</p>
